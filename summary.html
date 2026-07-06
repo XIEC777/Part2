@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>汇总 - xiec 的 blog</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    /* ========== 汇总页专属样式 ========== */
+
+    .header__navLink.is-active::after { width: 100%; }
+
+    /* ========== Hero ========== */
+    .summary-hero {
+      position: relative; z-index: 1;
+      padding: 150px 24px 64px; text-align: center;
+    }
+    .summary-hero__brand {
+      font-size: 13px; letter-spacing: 0.35em; color: #dba460;
+      margin-bottom: 10px; animation: fadeInUp 0.8s 0.1s both;
+    }
+    .summary-hero__title {
+      font-size: clamp(36px, 5vw, 56px); font-weight: 700;
+      color: #111; letter-spacing: -0.02em; margin-bottom: 12px;
+      animation: fadeInUp 0.8s 0.2s both;
+    }
+    .summary-hero__desc {
+      font-size: 15px; color: #999; letter-spacing: 0.06em;
+      max-width: 640px; margin: 0 auto; line-height: 1.8;
+      animation: fadeInUp 0.8s 0.3s both;
+    }
+
+    /* ========== 区块容器 ========== */
+    .section {
+      position: relative; z-index: 1;
+      max-width: 1100px; width: 100%;
+      margin: 0 auto; box-sizing: border-box;
+      padding: 0 24px 80px;
+    }
+    .section__header {
+      margin-bottom: 36px; text-align: center;
+    }
+    .section__label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      color: #dba460; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .section__title {
+      font-size: clamp(24px, 3vw, 32px); font-weight: 700;
+      color: #111; letter-spacing: -0.01em; margin-bottom: 6px;
+    }
+    .section__sub {
+      font-size: 13px; color: #999; letter-spacing: 0.04em;
+    }
+
+    /* ========== 页面概览卡片 ========== */
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .page-card {
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6); border-radius: 18px;
+      overflow: hidden; text-decoration: none; color: inherit;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.35s cubic-bezier(0.22,1,0.36,1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      display: flex; flex-direction: column;
+    }
+    .page-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.12);
+    }
+    .page-card:active { transform: translateY(-2px) scale(0.985); }
+
+    .page-card__preview {
+      width: 100%; height: 0; padding-bottom: 56.25%;
+      overflow: hidden; background: #fafafa;
+      border-bottom: 1px solid rgba(0,0,0,0.04); position: relative;
+    }
+    .page-card__preview iframe {
+      position: absolute; top: 0; left: 0;
+      width: calc(100% / 0.35); height: calc(100% / 0.35);
+      border: none; pointer-events: none;
+      transform: scale(0.35); transform-origin: 0 0;
+    }
+    .page-card__preview-placeholder {
+      position: absolute; inset: 0; display: flex;
+      align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #f0f0f0 0%, #e4e4e4 100%);
+      font-size: 52px;
+    }
+    .page-card__info {
+      padding: 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 6px;
+    }
+    .page-card__tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      color: #dba460; text-transform: uppercase;
+    }
+    .page-card__title {
+      font-size: 18px; font-weight: 700; color: #111;
+    }
+    .page-card__desc {
+      font-size: 12.5px; color: #888; line-height: 1.65; flex: 1;
+    }
+    .page-card__features {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+    }
+    .page-card__feat {
+      font-size: 10px; padding: 3px 10px; border-radius: 20px;
+      background: rgba(219,164,96,0.1); color: #b87d32;
+      letter-spacing: 0.03em; white-space: nowrap;
+    }
+    .page-card__files {
+      font-size: 10.5px; color: #aaa; margin-top: 6px;
+      letter-spacing: 0.02em;
+    }
+    .page-card__arrow {
+      position: absolute; bottom: 18px; right: 20px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,0.04); display: flex;
+      align-items: center; justify-content: center;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .page-card__info { position: relative; padding-bottom: 50px; }
+    .page-card:hover .page-card__arrow {
+      background: rgba(0,0,0,0.08); transform: translateX(3px);
+    }
+
+    /* ========== 技术栈卡片 ========== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .tech-card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.5); border-radius: 14px;
+      padding: 22px 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+    }
+    .tech-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+    .tech-card__icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 12px;
+    }
+    .tech-card__icon--html { background: #fff0e6; }
+    .tech-card__icon--css { background: #e6f0ff; }
+    .tech-card__icon--js { background: #fffbe6; }
+    .tech-card__icon--design { background: #f0e6ff; }
+    .tech-card__icon--perf { background: #e6fff0; }
+    .tech-card__title {
+      font-size: 15px; font-weight: 700; color: #111; margin-bottom: 6px;
+    }
+    .tech-card__list {
+      font-size: 11.5px; color: #777; line-height: 1.8;
+      list-style: none; padding: 0;
+    }
+    .tech-card__list li::before {
+      content: '• '; color: #dba460; font-weight: bold;
+    }
+
+    /* ========== 文件结构表格 ========== */
+    .file-table-wrap {
+      overflow-x: auto; border-radius: 14px;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .file-table {
+      width: 100%; border-collapse: collapse; font-size: 12.5px;
+    }
+    .file-table thead {
+      background: rgba(219,164,96,0.08);
+    }
+    .file-table th {
+      padding: 13px 16px; text-align: left; font-size: 10.5px;
+      font-weight: 600; letter-spacing: 0.08em; color: #dba460;
+      text-transform: uppercase; border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .file-table td {
+      padding: 11px 16px; color: #555;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .file-table tr:last-child td { border-bottom: none; }
+    .file-table tr:hover td { background: rgba(0,0,0,0.015); }
+    .file-table .badge {
+      display: inline-block; font-size: 10px; padding: 2px 8px;
+      border-radius: 10px; font-weight: 500; letter-spacing: 0.03em;
+    }
+    .badge--html { background: #fff0e6; color: #d46b08; }
+    .badge--css  { background: #e6f0ff; color: #1c7ed6; }
+    .badge--js   { background: #fffbe6; color: #b8860b; }
+    .badge--img  { background: #f0e6ff; color: #7950f2; }
+    .badge--cfg  { background: #e6fff0; color: #0b7d4a; }
+    .badge--dir  { background: #f5f5f5; color: #666; }
+
+    /* ========== 设计系统色板 ========== */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .color-swatch {
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.5); border-radius: 12px;
+      overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .color-swatch__preview {
+      height: 64px; display: flex; align-items: flex-end;
+      padding: 10px 12px;
+    }
+    .color-swatch__info {
+      padding: 10px 12px;
+    }
+    .color-swatch__name {
+      font-size: 12px; font-weight: 600; color: #333;
+    }
+    .color-swatch__hex {
+      font-size: 10.5px; color: #999; font-family: 'DM Mono', monospace;
+    }
+
+    /* ========== 页面详解卡片 ========== */
+    .detail-grid {
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .detail-card {
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6); border-radius: 18px;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.35s cubic-bezier(0.22,1,0.36,1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .detail-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 44px rgba(0,0,0,0.08);
+    }
+    .detail-card__header {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 24px 28px;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      background: linear-gradient(135deg, rgba(219,164,96,0.04), transparent);
+    }
+    .detail-card__num {
+      flex-shrink: 0; width: 48px; height: 48px;
+      border-radius: 12px; background: #111; color: #dba460;
+      font-size: 18px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      letter-spacing: -0.02em;
+    }
+    .detail-card__meta { flex: 1; min-width: 0; }
+    .detail-card__file {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+      color: #dba460; text-transform: uppercase;
+    }
+    .detail-card__name {
+      font-size: 20px; font-weight: 700; color: #111;
+      letter-spacing: -0.01em; margin: 4px 0;
+    }
+    .detail-card__desc {
+      font-size: 13px; color: #888; letter-spacing: 0.02em;
+    }
+    .detail-card__link {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.1); display: flex;
+      align-items: center; justify-content: center; color: #ccc;
+      transition: all 0.3s; margin-top: 6px; text-decoration: none;
+    }
+    .detail-card__link:hover {
+      color: #dba460; border-color: #dba460;
+      transform: translate(2px, -2px);
+    }
+    .detail-card__body {
+      padding: 24px 28px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .detail-card__section h4 {
+      font-size: 13px; font-weight: 700; color: #111;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 2px solid #dba460; display: inline-block;
+    }
+    .detail-card__section ul {
+      list-style: none; padding: 0;
+    }
+    .detail-card__section li {
+      font-size: 13px; color: #666; line-height: 1.7;
+      padding: 2px 0; padding-left: 16px; position: relative;
+    }
+    .detail-card__section li::before {
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 5px; height: 5px; border-radius: 50%; background: #ddd;
+    }
+    .detail-card__section code {
+      font-family: 'DM Mono', 'SF Mono', 'Consolas', monospace;
+      font-size: 11px; background: #f5f5f5; padding: 1px 6px;
+      border-radius: 4px; color: #dba460;
+    }
+    .detail-card__tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      padding: 0 28px 20px;
+    }
+    .detail-card__tags span {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.03em;
+      padding: 4px 12px; border-radius: 999px;
+      background: rgba(219,164,96,0.08); color: #b87d32;
+      border: 1px solid rgba(219,164,96,0.15);
+    }
+
+    /* ========== 关系卡片 ========== */
+    .rel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .rel-card {
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.5); border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+    }
+    .rel-card h4 {
+      font-size: 14px; font-weight: 700; color: #111;
+      letter-spacing: 0.02em; margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 2px solid #dba460; display: inline-block;
+    }
+    .rel-card ul {
+      list-style: none; padding: 0;
+    }
+    .rel-card li {
+      font-size: 13px; color: #666; line-height: 1.8;
+      padding-left: 16px; position: relative;
+    }
+    .rel-card li::before {
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #dba460; opacity: 0.5;
+    }
+    .rel-card li strong { color: #111; }
+    .rel-diagram { text-align: center; }
+    .rel-node {
+      display: inline-block; padding: 10px 24px;
+      background: #111; color: #dba460; border-radius: 999px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .rel-links {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 6px; font-size: 12px; color: #aaa;
+      letter-spacing: 0.04em;
+    }
+    .rel-links span {
+      padding: 4px 10px; background: rgba(219,164,96,0.08);
+      border-radius: 6px; color: #b87d32; font-weight: 500;
+    }
+
+    /* ========== 统计数字 ========== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px; margin-bottom: 60px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6); border-radius: 16px;
+      padding: 24px 20px; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .stat-card__num {
+      font-size: 36px; font-weight: 700; color: #111;
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .stat-card__label {
+      font-size: 11px; color: #999; letter-spacing: 0.06em; margin-top: 6px;
+    }
+
+    /* ========== 页脚 ========== */
+    .summary-footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding: 24px 32px; text-align: center;
+    }
+    .summary-footer__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: #aaa; letter-spacing: 0.04em;
+    }
+
+    /* ========== 动画序列 ========== */
+    .fade-in {
+      opacity: 0; animation: fadeInUp 0.7s forwards;
+    }
+    .fade-in--1 { animation-delay: 0.1s; }
+    .fade-in--2 { animation-delay: 0.2s; }
+    .fade-in--3 { animation-delay: 0.3s; }
+    .fade-in--4 { animation-delay: 0.4s; }
+    .fade-in--5 { animation-delay: 0.5s; }
+    .fade-in--6 { animation-delay: 0.6s; }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 768px) {
+      .summary-hero { padding: 120px 20px 40px; }
+      .summary-hero__title { font-size: 28px; }
+      .pages-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .color-grid { grid-template-columns: 1fr 1fr; }
+      .section { padding: 0 16px 50px; }
+      .summary-footer__inner { flex-direction: column; align-items: center; gap: 8px; }
+      .detail-card__body { grid-template-columns: 1fr; gap: 16px; }
+      .rel-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .color-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__left">
+      <a href="./index.html" class="header__logo">
+        <img src="./images/logo.png" alt="XIEC" class="header__logoImg" />
+      </a>
+    </div>
+    <nav class="header__nav">
+      <a href="./index.html" class="header__navLink">主页</a>
+      <a href="./works.html" class="header__navLink">作品</a>
+      <a href="./social.html" class="header__navLink">社交</a>
+      <a href="./music.html" class="header__navLink">音乐</a>
+      <a href="./zixi.html" class="header__navLink" target="_blank">自习</a>
+      <a href="./suggest.html" class="header__navLink">建议</a>
+      <a href="#" class="header__navLink is-active">汇总</a>
+    </nav>
+    <div class="header__right">
+      <button class="header__lang">EN</button>
+      <button class="header__share">分享</button>
+    </div>
+  </header>
+
+  <!-- 毛玻璃 + 色彩流动背景 -->
+  <div class="flow-bg">
+    <div class="flow-blob flow-blob--1"></div>
+    <div class="flow-blob flow-blob--2"></div>
+    <div class="flow-blob flow-blob--3"></div>
+    <div class="flow-blob flow-blob--4"></div>
+    <div class="flow-blob flow-blob--5"></div>
+  </div>
+  <div class="glass-overlay"></div>
+
+  <!-- ==================== Hero ==================== -->
+  <section class="summary-hero">
+    <div class="summary-hero__brand">PROJECT OVERVIEW</div>
+    <h1 class="summary-hero__title">项目汇总</h1>
+    <p class="summary-hero__desc">
+      xiec 的个人博客项目，共包含 7 个功能页面，涵盖首页展示、作品集、社交链接、音乐播放、
+      建议反馈、MBTI 沉浸自习室等模块。采用统一的毛玻璃设计语言与色彩流动背景系统。
+    </p>
+  </section>
+
+  <!-- ==================== 项目统计 ==================== -->
+  <div class="section" style="padding-top: 0;">
+    <div class="stats-row">
+      <div class="stat-card fade-in fade-in--1">
+        <div class="stat-card__num">7</div>
+        <div class="stat-card__label">HTML 页面</div>
+      </div>
+      <div class="stat-card fade-in fade-in--2">
+        <div class="stat-card__num">8</div>
+        <div class="stat-card__label">CSS 样式文件</div>
+      </div>
+      <div class="stat-card fade-in fade-in--3">
+        <div class="stat-card__num">3</div>
+        <div class="stat-card__label">JS 脚本文件</div>
+      </div>
+      <div class="stat-card fade-in fade-in--4">
+        <div class="stat-card__num">20+</div>
+        <div class="stat-card__label">媒体资源</div>
+      </div>
+      <div class="stat-card fade-in fade-in--5">
+        <div class="stat-card__num">16</div>
+        <div class="stat-card__label">MBTI 人格场景</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 页面概览 ==================== -->
+  <div class="section">
+    <div class="section__header">
+      <div class="section__label">Pages</div>
+      <h2 class="section__title">页面概览</h2>
+      <p class="section__sub">所有子页面的结构、功能与交互特性一览</p>
+    </div>
+
+    <div class="pages-grid">
+      <!-- 主页 -->
+      <a href="./index.html" class="page-card fade-in fade-in--1">
+        <div class="page-card__preview">
+          <iframe src="./index.html" loading="lazy" title="主页预览"></iframe>
+        </div>
+        <div class="page-card__info">
+          <span class="page-card__tag">首页 · Home</span>
+          <h3 class="page-card__title">主页</h3>
+          <p class="page-card__desc">
+            xiec 的 blog 首页，展示品牌形象和个人信息。采用全屏 Hero 布局，
+            支持自定义黑色圆形光标，标题文字随光标切换为「你好 我是谢承轩」，
+            每个字符拥有独立的 3D 旋转跟随效果。
+          </p>
+          <div class="page-card__features">
+            <span class="page-card__feat">自定义光标</span>
+            <span class="page-card__feat">字符 3D 旋转</span>
+            <span class="page-card__feat">视差偏移</span>
+            <span class="page-card__feat">标题切换</span>
+          </div>
+          <div class="page-card__files">
+            <span class="badge badge--html">index.html</span>
+            <span class="badge badge--css">styles.css</span>
+            <span class="badge badge--js">script.js</span>
+          </div>
+          <div class="page-card__arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- 作品 -->
+      <a href="./works.html" class="page-card fade-in fade-in--2">
+        <div class="page-card__preview">
+          <iframe src="./works.html" loading="lazy" title="作品页预览"></iframe>
+        </div>
+        <div class="page-card__info">
+          <span class="page-card__tag">展示 · Portfolio</span>
+          <h3 class="page-card__title">作品</h3>
+          <p class="page-card__desc">
+            精选创作作品展示，包含建模、拍摄、调色三大分类。
+            3D 透视轮播图支持自动播放、键盘导航和触摸滑动，
+            鼠标悬停触发视差旋转效果，点击打开全屏灯箱查看。
+          </p>
+          <div class="page-card__features">
+            <span class="page-card__feat">3D 轮播图</span>
+            <span class="page-card__feat">鼠标视差</span>
+            <span class="page-card__feat">分类筛选</span>
+            <span class="page-card__feat">灯箱模态框</span>
+          </div>
+          <div class="page-card__files">
+            <span class="badge badge--html">works.html</span>
+            <span class="badge badge--css">works.css</span>
+            <span class="badge badge--js">works.js</span>
+          </div>
+          <div class="page-card__arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- 社交 -->
+      <a href="./social.html" class="page-card fade-in fade-in--3">
+        <div class="page-card__preview">
+          <iframe src="./social.html" loading="lazy" title="社交页预览"></iframe>
+        </div>
+        <div class="page-card__info">
+          <span class="page-card__tag">连接 · Social</span>
+          <h3 class="page-card__title">社交</h3>
+          <p class="page-card__desc">
+            8 个社交平台链接汇总，包括 GitHub、小红书、Bilibili、
+            抖音、QQ、微信、微博、网易云音乐。入场时卡片如扑克牌般从底部飞入，
+            扇形摊开到各自位置，Hover 触发联动位移效果。
+          </p>
+          <div class="page-card__features">
+            <span class="page-card__feat">扑克牌入场</span>
+            <span class="page-card__feat">光标视差</span>
+            <span class="page-card__feat">Hover 联动</span>
+            <span class="page-card__feat">SVG 图标</span>
+          </div>
+          <div class="page-card__files">
+            <span class="badge badge--html">social.html</span>
+            <span class="badge badge--css">social.css</span>
+            <span class="badge badge--js">social.js</span>
+          </div>
+          <div class="page-card__arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- 音乐 -->
+      <a href="./music.html" class="page-card fade-in fade-in--4">
+        <div class="page-card__preview">
+          <iframe src="./music.html" loading="lazy" title="音乐页预览"></iframe>
+        </div>
+        <div class="page-card__info">
+          <span class="page-card__tag">聆听 · Music</span>
+          <h3 class="page-card__title">音乐</h3>
+          <p class="page-card__desc">
+            通过 iframe 嵌入 Hanakos Music 外部音乐网站，提供完整的在线音乐
+            播放体验。页面极简设计，全高度嵌入，支持全屏播放，
+            移动端自适应适配。
+          </p>
+          <div class="page-card__features">
+            <span class="page-card__feat">外部嵌入</span>
+            <span class="page-card__feat">全屏播放</span>
+            <span class="page-card__feat">全高度布局</span>
+            <span class="page-card__feat">响应式</span>
+          </div>
+          <div class="page-card__files">
+            <span class="badge badge--html">music.html</span>
+            <span class="badge badge--css">music.css</span>
+            <span class="badge badge--dir">外部 API</span>
+          </div>
+          <div class="page-card__arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- 建议 -->
+      <a href="./suggest.html" class="page-card fade-in fade-in--5">
+        <div class="page-card__preview">
+          <iframe src="./suggest.html" loading="lazy" title="建议页预览"></iframe>
+        </div>
+        <div class="page-card__info">
+          <span class="page-card__tag">反馈 · Feedback</span>
+          <h3 class="page-card__title">建议</h3>
+          <p class="page-card__desc">
+            集成了 Tally 表单用于收集用户反馈。页面核心特色是 4 张可拖拽的
+            子页面预览卡片，实现完整的 2D 物理引擎：重力、碰撞检测（SAT 分离轴定理）、
+            弹性反弹、拖拽甩出加速度、角速度旋转、动态阴影与自动归位系统。
+          </p>
+          <div class="page-card__features">
+            <span class="page-card__feat">物理引擎</span>
+            <span class="page-card__feat">SAT 碰撞</span>
+            <span class="page-card__feat">拖拽甩出</span>
+            <span class="page-card__feat">自动归位</span>
+          </div>
+          <div class="page-card__files">
+            <span class="badge badge--html">suggest.html</span>
+            <span class="badge badge--css">suggest.css</span>
+            <span class="badge badge--dir">Tally 表单</span>
+          </div>
+          <div class="page-card__arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- 自习 -->
+      <a href="./zixi.html" class="page-card fade-in fade-in--6" target="_blank">
+        <div class="page-card__preview">
+          <div class="page-card__preview-placeholder">📚</div>
+        </div>
+        <div class="page-card__info">
+          <span class="page-card__tag">学习 · Study</span>
+          <h3 class="page-card__title">MBTI 沉浸自习室</h3>
+          <p class="page-card__desc">
+            基于 16 种 MBTI 人格类型的沉浸式自习计时器。提供番茄钟计时、
+            SVG 环形进度、多通道音效混音器、待办清单、学习日记、成就系统、
+            统计热力图、护眼提醒、专注模式、粒子特效背景等完整功能。
+          </p>
+          <div class="page-card__features">
+            <span class="page-card__feat">MBTI 场景</span>
+            <span class="page-card__feat">番茄钟</span>
+            <span class="page-card__feat">音效混音</span>
+            <span class="page-card__feat">粒子特效</span>
+          </div>
+          <div class="page-card__files">
+            <span class="badge badge--html">zixi.html</span>
+            <span class="badge badge--dir">内联 CSS+JS</span>
+            <span class="badge badge--dir">Google Fonts</span>
+          </div>
+          <div class="page-card__arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==================== 页面详解 ==================== -->
+  <div class="section">
+    <div class="section__header">
+      <div class="section__label">Detail</div>
+      <h2 class="section__title">页面详解</h2>
+      <p class="section__sub">每个页面的结构、功能交互与技术实现要点</p>
+    </div>
+
+    <div class="detail-grid">
+
+      <!-- 1. 主页 index.html -->
+      <div class="detail-card fade-in fade-in--1">
+        <div class="detail-card__header">
+          <div class="detail-card__num">01</div>
+          <div class="detail-card__meta">
+            <span class="detail-card__file">index.html + styles.css + script.js</span>
+            <h3 class="detail-card__name">主页</h3>
+            <p class="detail-card__desc">个人博客首页 / 品牌落地页 / 自定义光标与字符 3D 旋转</p>
+          </div>
+          <a href="./index.html" class="detail-card__link" target="_blank" aria-label="打开主页">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </a>
+        </div>
+        <div class="detail-card__body">
+          <div class="detail-card__section">
+            <h4>结构</h4>
+            <ul>
+              <li><code>&lt;section class="hero"&gt;</code> 全屏 (100vh) Hero 区域</li>
+              <li><code>.hero__brand</code> "hello" 金色品牌文字 (fadeInUp 入场)</li>
+              <li><code>.hero__title</code> 大标题 "xiec 的 blog" (clamp 86-122px)</li>
+              <li><code>.hero__countdown</code> 学校名 + 地点</li>
+              <li><code>#cursor</code> 400px 黑色圆形自定义光标</li>
+              <li><code>.hero__char</code> 每个标题字符独立 span，支持 3D 变换</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>功能与交互</h4>
+            <ul>
+              <li><strong>自定义大圆形光标：</strong>400px 黑色圆跟随鼠标移动，平滑过渡</li>
+              <li><strong>标题文字 3D 朝向：</strong>每个字符随光标位置独立旋转 (rotateX/Y)</li>
+              <li><strong>标题切换：</strong>光标移入标题区域切换为「你好 我是谢承轩」</li>
+              <li><strong>导航栏区域</strong>自动隐藏自定义光标 (pointer-events 恢复默认)</li>
+              <li><strong>主页专属波点背景：</strong>radial-gradient 圆点纹理叠加毛玻璃</li>
+              <li>所有文字元素 fadeInUp 错位入场动画</li>
+              <li>5 个彩色光斑持续漂移营造流动氛围</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>技术要点</h4>
+            <ul>
+              <li><code>body.page-home</code> 类触发主页专属样式（波点背景、自定义光标）</li>
+              <li>自定义光标通过 JS <code>mousemove</code> 事件驱动 (transform translate)</li>
+              <li>字符 3D 通过 <code>perspective</code> + <code>rotateX/Y</code> + <code>transform-origin</code></li>
+              <li>标题切换使用 <code>opacity</code> + <code>pointer-events</code> 过渡</li>
+              <li>响应式：移动端隐藏自定义光标 (display: none)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-card__tags">
+          <span>fadeInUp 动画</span><span>自定义光标</span><span>字符 3D 旋转</span><span>毛玻璃背景</span><span>全屏 Hero</span><span>标题切换</span><span>视差效果</span>
+        </div>
+      </div>
+
+      <!-- 2. 作品页 works.html -->
+      <div class="detail-card fade-in fade-in--2">
+        <div class="detail-card__header">
+          <div class="detail-card__num">02</div>
+          <div class="detail-card__meta">
+            <span class="detail-card__file">works.html + works.css + works.js</span>
+            <h3 class="detail-card__name">作品</h3>
+            <p class="detail-card__desc">创意作品集展示 / 3D 轮播 / 分类筛选 / 灯箱预览 / 鼠标视差</p>
+          </div>
+          <a href="./works.html" class="detail-card__link" target="_blank" aria-label="打开作品页">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </a>
+        </div>
+        <div class="detail-card__body">
+          <div class="detail-card__section">
+            <h4>结构</h4>
+            <ul>
+              <li><code>.works__hero</code> 页面标题区 (PORTFOLIO / My Works)</li>
+              <li><code>.works__carousel</code> 3D 堆叠轮播图 (7 张精选作品)</li>
+              <li><code>.works__filters</code> 5 个分类筛选按钮 (全部/建模/拍摄/调色/其他)</li>
+              <li><code>.works__grid</code> 3 列 CSS Grid (响应式: 2列→1列)</li>
+              <li>20 张 <code>.works__card</code>：8 建模 + 7 拍摄 + 2 调色视频 + 其他占位</li>
+              <li><code>.lightbox</code> 全屏灯箱模态框 (前后导航/关闭/信息展示)</li>
+              <li><code>.works__more</code> 加载更多按钮</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>功能与交互</h4>
+            <ul>
+              <li><strong>3D 堆叠轮播：</strong>当前卡片居中 + 左右两侧卡片缩放倾斜</li>
+              <li>轮播卡片旋转: rotateY(±15°) + rotateZ(±3°) 3D 倾斜</li>
+              <li><strong>毛玻璃卡片：</strong>backdrop-filter blur + 半透明边框 + 内阴影</li>
+              <li><strong>鼠标视差：</strong>光标移动时卡片 3D 旋转跟随 (倾斜 ±20°)</li>
+              <li>当前卡片动态阴影随鼠标方向偏移</li>
+              <li><strong>轮播点击灯箱：</strong>任意轮播卡片均可点击打开全屏预览</li>
+              <li>自动播放 (4s)、hover 暂停、触摸滑动、键盘导航 (←→)</li>
+              <li><strong>分类筛选：</strong>点击按钮通过 data-category 显示/隐藏卡片</li>
+              <li><strong>灯箱预览：</strong>点击网格卡片打开全屏大图，支持键盘/按钮前后导航</li>
+              <li>视频作品自动循环静音播放</li>
+              <li>所有卡片错开延迟的 fadeInUp 入场动画</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>技术要点</h4>
+            <ul>
+              <li>轮播使用 class 状态机 (is-active/is-prev/is-next/is-hidden)</li>
+              <li>3D 透视: perspective(1200px) + transform-origin</li>
+              <li>内层 .carousel__inner 独立控制圆角与 overflow</li>
+              <li>视差通过 mousemove 计算相对位置驱动 transform</li>
+              <li>轮播与网格卡片通过图片 src 匹配联动灯箱</li>
+              <li>筛选逻辑使用 <code>.is-hidden</code> 类控制显隐</li>
+              <li>灯箱 <code>opacity + visibility</code> 过渡，图片 scale 动画</li>
+              <li>lazy loading 图片优化性能</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-card__tags">
+          <span>3D 轮播</span><span>鼠标视差</span><span>CSS Grid</span><span>分类筛选</span><span>灯箱模态框</span><span>毛玻璃</span><span>视频嵌入</span><span>lazy load</span>
+        </div>
+      </div>
+
+      <!-- 3. 社交页 social.html -->
+      <div class="detail-card fade-in fade-in--3">
+        <div class="detail-card__header">
+          <div class="detail-card__num">03</div>
+          <div class="detail-card__meta">
+            <span class="detail-card__file">social.html + social.css + social.js</span>
+            <h3 class="detail-card__name">社交</h3>
+            <p class="detail-card__desc">社交平台链接卡片 / 扑克牌摊开动画 / hover 抽出效果</p>
+          </div>
+          <a href="./social.html" class="detail-card__link" target="_blank" aria-label="打开社交页">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </a>
+        </div>
+        <div class="detail-card__body">
+          <div class="detail-card__section">
+            <h4>结构</h4>
+            <ul>
+              <li><code>.social__hero</code> 标题区 (SOCIAL / 社交平台)</li>
+              <li><code>.social__grid</code> 扑克牌扇形层叠布局 (flex + fixed 定位)</li>
+              <li>8 张 <code>.social__card</code> (均为 &lt;a&gt; 标签)</li>
+              <li>每张卡片：彩色图标 + 标签/标题/描述 + 跳转箭头</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>功能与交互</h4>
+            <ul>
+              <li><strong>平台卡片：</strong>GitHub / 小红书 / Bilibili / 抖音 / QQ / 微信 / 微博 / 网易云音乐</li>
+              <li><strong>扑克牌摊开动画：</strong>卡片从中心堆叠 → 缩放 → 扇形展开 (rAF 驱动)</li>
+              <li><strong>hover 抽出效果：</strong>当前卡片向上移出牌堆 (~140px) + 轻微放大</li>
+              <li>左右邻居卡片自动上移并向外推开，为当前卡片腾出空间</li>
+              <li>卡片为 &lt;a&gt; 链接，target="_blank" 新窗口跳转</li>
+              <li>hover: 金色边框 + 渐变背景 + 图标放大 + 标题变色 + 深阴影</li>
+              <li>箭头 hover: 金色变色 + 右上方位移</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>技术要点</h4>
+            <ul>
+              <li><strong>入场动画：</strong>单一 rAF 循环驱动 4 阶段动画 (渐入→放大→保持→摊开)</li>
+              <li>动画阶段通过 transform/opacity 实现，避免 layout thrashing</li>
+              <li>卡片使用 fixed 定位 + transform translate3d 实现扇形排列</li>
+              <li>动画结束后切换到 left/top 定位 + CSS transition 接管 hover</li>
+              <li>resize 响应重新计算卡片位置</li>
+              <li>伪元素 <code>::before</code> 实现 hover 渐变背景</li>
+              <li>平台图标使用内联 SVG，自定义品牌色背景</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-card__tags">
+          <span>扑克牌动画</span><span>rAF 驱动</span><span>扇形摊开</span><span>hover 抽出</span><span>SVG 图标</span><span>外部链接</span><span>fixed 定位</span><span>3D transform</span>
+        </div>
+      </div>
+
+      <!-- 4. 音乐页 music.html -->
+      <div class="detail-card fade-in fade-in--4">
+        <div class="detail-card__header">
+          <div class="detail-card__num">04</div>
+          <div class="detail-card__meta">
+            <span class="detail-card__file">music.html + music.css</span>
+            <h3 class="detail-card__name">音乐</h3>
+            <p class="detail-card__desc">嵌入外部音乐网站 / iframe 集成</p>
+          </div>
+          <a href="./music.html" class="detail-card__link" target="_blank" aria-label="打开音乐页">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </a>
+        </div>
+        <div class="detail-card__body">
+          <div class="detail-card__section">
+            <h4>结构</h4>
+            <ul>
+              <li><code>iframe.music__frame</code> 嵌入 Hanakos Music</li>
+              <li>几乎占满视口 (calc(100vh - 80px))</li>
+              <li>底部页脚 (版权 + 地点)</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>功能与交互</h4>
+            <ul>
+              <li>嵌入 <code>https://forum.hanakos.cc/music</code></li>
+              <li>允许全屏 (allow="fullscreen")</li>
+              <li>lazy loading 延迟加载</li>
+              <li>圆角 12px 白色背景</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>技术要点</h4>
+            <ul>
+              <li>纯 iframe 嵌入，无复杂 JS 逻辑</li>
+              <li>最简洁的页面结构</li>
+              <li>移动端自适应高度</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-card__tags">
+          <span>iframe 嵌入</span><span>第三方集成</span><span>全屏支持</span>
+        </div>
+      </div>
+
+      <!-- 5. 自习页 zixi.html -->
+      <div class="detail-card fade-in fade-in--5">
+        <div class="detail-card__header">
+          <div class="detail-card__num">05</div>
+          <div class="detail-card__meta">
+            <span class="detail-card__file">zixi.html (独立单文件 ~2000行)</span>
+            <h3 class="detail-card__name">MBTI 沉浸自习室</h3>
+            <p class="detail-card__desc">MBTI 沉浸式自习室 / 番茄钟计时 / 数据统计</p>
+          </div>
+          <a href="./zixi.html" class="detail-card__link" target="_blank" aria-label="打开自习页">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </a>
+        </div>
+        <div class="detail-card__body">
+          <div class="detail-card__section">
+            <h4>结构</h4>
+            <ul>
+              <li><strong>选择页 (#selection)：</strong>MBTI 16 人格类型卡片选择 + 每日目标设置</li>
+              <li><strong>学习界面 (#studyUI)：</strong>顶部栏 (时钟/场景/音量) + 中央计时器 + 底栏</li>
+              <li><strong>侧边导航 (.side-nav)：</strong>6 个页面链接，鼠标悬停滑出</li>
+              <li><strong>滑出面板：</strong>待办 / 日记 / 成就 / 统计 / 设置 (左右滑出)</li>
+              <li><strong>弹出层：</strong>退出报告 / 护眼提醒 / 完成通知 / 成就弹窗</li>
+              <li><strong>背景系统：</strong>Canvas 粒子特效 + 场景图片 + 光斑 + 暗角</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>功能与交互</h4>
+            <ul>
+              <li><strong>16 种 MBTI 人格：</strong>每种对应独特场景 (森林/海洋/星空等)</li>
+              <li><strong>番茄钟计时：</strong>正计时 / 倒计时 / 自定义时长</li>
+              <li><strong>BGM 系统：</strong>多种场景白噪音 + 音量控制</li>
+              <li><strong>待办清单：</strong>添加/完成/删除任务，进度统计</li>
+              <li><strong>学习日记：</strong>每次完成后记录心得</li>
+              <li><strong>成就系统：</strong>累计番茄数解锁成就徽章</li>
+              <li><strong>数据统计：</strong>总时长/天数/连续天数/时段热力图/每日目标</li>
+              <li><strong>数据导入导出：</strong>JSON 格式备份恢复</li>
+              <li><strong>护眼提醒：</strong>每 20 分钟弹出休息提示</li>
+              <li><strong>全屏模式：</strong>沉浸式专注体验</li>
+              <li><strong>专注模式：</strong>隐藏 UI 仅显示计时器</li>
+              <li><strong>场景随机切换：</strong>一键随机探索</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>技术要点</h4>
+            <ul>
+              <li><strong>单文件架构：</strong>~2000 行 HTML/CSS/JS 内联</li>
+              <li><strong>CSS 变量主题系统：</strong>--accent / --glass / --border / --t1-t3 / --surface</li>
+              <li><strong>Canvas 粒子动画：</strong>背景动态粒子效果</li>
+              <li><strong>localStorage 持久化：</strong>所有数据本地存储</li>
+              <li><strong>昼夜模式：</strong>body.light 类切换完整主题</li>
+              <li><strong>环形进度条：</strong>SVG circle 实现计时可视化</li>
+              <li><strong>MBTI 分组：</strong>分析师/外交家/守护者/探险家四组</li>
+              <li><strong>热力图：</strong>展示每日学习时段分布</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-card__tags">
+          <span>番茄钟</span><span>MBTI</span><span>Canvas 粒子</span><span>localStorage</span><span>CSS 变量</span><span>成就系统</span><span>数据统计</span><span>热力图</span><span>昼夜主题</span><span>全屏模式</span>
+        </div>
+      </div>
+
+      <!-- 6. 建议页 suggest.html -->
+      <div class="detail-card fade-in fade-in--6">
+        <div class="detail-card__header">
+          <div class="detail-card__num">06</div>
+          <div class="detail-card__meta">
+            <span class="detail-card__file">suggest.html + suggest.css</span>
+            <h3 class="detail-card__name">建议</h3>
+            <p class="detail-card__desc">用户反馈表单 / Tally 集成 / 物理卡片拖拽系统</p>
+          </div>
+          <a href="./suggest.html" class="detail-card__link" target="_blank" aria-label="打开建议页">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </a>
+        </div>
+        <div class="detail-card__body">
+          <div class="detail-card__section">
+            <h4>结构</h4>
+            <ul>
+              <li><code>.suggest__hero</code> 标题区 (FEEDBACK / 建议反馈)</li>
+              <li><code>.suggest__form</code> 白色卡片容器 (max-width 680px)</li>
+              <li>Tally 表单 iframe 嵌入</li>
+              <li><strong>4 张背景预览卡片：</strong>主页/作品/社交/音乐 页面实时预览</li>
+              <li><strong>左下角控制面板：</strong>一键归位 + 自动归位开关</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>功能与交互</h4>
+            <ul>
+              <li>嵌入 Tally.so 表单 (<code>rjgllM</code>)</li>
+              <li>动态加载 Tally 嵌入脚本</li>
+              <li><strong>2D 物理引擎：</strong>重力 + 空气阻力 + 地面摩擦 + 弹性反弹</li>
+              <li><strong>SAT 碰撞检测：</strong>分离轴定理检测卡片间碰撞</li>
+              <li><strong>拖拽甩出：</strong>1:1 跟手拖拽 + 松手速度增强 + 旋转拖拽</li>
+              <li><strong>角速度物理：</strong>碰撞产生扭矩 + 地面回正 + 角速度衰减</li>
+              <li><strong>动态阴影：</strong>随卡片高度实时变化</li>
+              <li><strong>自动归位：</strong>静止后自动回到原始 CSS 位置</li>
+              <li><strong>漂浮动画：</strong>未拖拽时卡片上下轻微浮动</li>
+            </ul>
+          </div>
+          <div class="detail-card__section">
+            <h4>技术要点</h4>
+            <ul>
+              <li><strong>SAT 分离轴定理：</strong>4 顶点 OBB 碰撞检测 + 法线分离</li>
+              <li><strong>碰撞冷却：</strong>50ms 冷却防止同帧反复抖动</li>
+              <li><strong>碰撞分离余量：</strong>60px 额外分离确保不再重叠</li>
+              <li><strong>统一物理循环：</strong>全局 rAF 驱动所有物理卡片</li>
+              <li><strong>GPU 优化：</strong>物理模拟时禁用 backdrop-filter</li>
+              <li><strong>触摸支持：</strong>完整的 touchstart/move/end 事件处理</li>
+              <li><strong>第三方表单集成：</strong>异步脚本加载 + 回调初始化</li>
+            </ul>
+          </div>
+        </div>
+        <div class="detail-card__tags">
+          <span>Tally 表单</span><span>物理引擎</span><span>SAT 碰撞</span><span>拖拽甩出</span><span>旋转拖拽</span><span>动态阴影</span><span>自动归位</span><span>iframe 预览</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== 页面间关系 ==================== -->
+  <div class="section">
+    <div class="section__header">
+      <div class="section__label">Relations</div>
+      <h2 class="section__title">页面间关系</h2>
+      <p class="section__sub">导航拓扑与资源依赖关系</p>
+    </div>
+    <div class="rel-grid">
+      <div class="rel-card fade-in fade-in--1">
+        <h4>导航拓扑</h4>
+        <div class="rel-diagram">
+          <div class="rel-node">Header 导航栏</div>
+          <div class="rel-links">
+            <span>主页</span> → <span>作品</span> → <span>社交</span> → <span>音乐</span> → <span>自习</span> → <span>建议</span> → <span>汇总</span>
+          </div>
+        </div>
+      </div>
+      <div class="rel-card fade-in fade-in--2">
+        <h4>CSS 依赖关系</h4>
+        <ul>
+          <li><strong>styles.css</strong> ← 所有页面共享</li>
+          <li><strong>works.css</strong> ← works.html (轮播/视差/灯箱)</li>
+          <li><strong>social.css</strong> ← social.html</li>
+          <li><strong>music.css</strong> ← music.html</li>
+          <li><strong>suggest.css</strong> ← suggest.html</li>
+          <li><strong>summary.css</strong> ← summary.html</li>
+          <li><strong>zixi.html</strong> 完全独立 (内联 CSS/JS)</li>
+        </ul>
+      </div>
+      <div class="rel-card fade-in fade-in--3">
+        <h4>JS 依赖关系</h4>
+        <ul>
+          <li><strong>script.js</strong> ← index.html (光标/标题)</li>
+          <li><strong>works.js</strong> ← works.html (轮播/筛选/灯箱/视差)</li>
+          <li><strong>social.js</strong> ← social.html (入场动画)</li>
+          <li><strong>zixi.html</strong> 内联 JS (~800行)</li>
+          <li><strong>suggest.html</strong> 内联 JS (~1000行 物理引擎)</li>
+          <li>music / summary 无 JS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 技术栈 ==================== -->
+  <div class="section">
+    <div class="section__header">
+      <div class="section__label">Tech Stack</div>
+      <h2 class="section__title">技术栈</h2>
+      <p class="section__sub">项目采用纯原生前端技术，无框架依赖</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-card__icon tech-card__icon--html">📄</div>
+        <h3 class="tech-card__title">HTML5</h3>
+        <ul class="tech-card__list">
+          <li>语义化标签结构</li>
+          <li>Canvas 粒子特效</li>
+          <li>SVG 内联图形</li>
+          <li>iframe 外部嵌入</li>
+          <li>data-* 属性驱动筛选</li>
+          <li>响应式 meta viewport</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <div class="tech-card__icon tech-card__icon--css">🎨</div>
+        <h3 class="tech-card__title">CSS3</h3>
+        <ul class="tech-card__list">
+          <li>CSS Grid + Flexbox 布局</li>
+          <li>backdrop-filter 毛玻璃</li>
+          <li>CSS 自定义属性 (变量)</li>
+          <li>@keyframes 关键帧动画</li>
+          <li>cubic-bezier 缓动函数</li>
+          <li>transform 3D 透视变换</li>
+          <li>will-change 性能优化</li>
+          <li>媒体查询响应式适配</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <div class="tech-card__icon tech-card__icon--js">⚡</div>
+        <h3 class="tech-card__title">JavaScript</h3>
+        <ul class="tech-card__list">
+          <li>SAT 分离轴碰撞检测</li>
+          <li>2D 物理引擎模拟</li>
+          <li>requestAnimationFrame 循环</li>
+          <li>事件委托与触摸支持</li>
+          <li>LocalStorage 数据持久化</li>
+          <li>Canvas 粒子系统</li>
+          <li>三阶段入场动画系统</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <div class="tech-card__icon tech-card__icon--design">✨</div>
+        <h3 class="tech-card__title">设计系统</h3>
+        <ul class="tech-card__list">
+          <li>金色强调色 #dba460</li>
+          <li>系统字体栈优先</li>
+          <li>色彩流动光斑背景</li>
+          <li>60px 模糊毛玻璃层</li>
+          <li>统一的淡入上滑入场</li>
+          <li>一致的导航栏与页脚</li>
+          <li>明暗双模式支持</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <div class="tech-card__icon tech-card__icon--perf">🚀</div>
+        <h3 class="tech-card__title">性能优化</h3>
+        <ul class="tech-card__list">
+          <li>transform: translateZ(0) GPU 加速</li>
+          <li>backface-visibility 优化</li>
+          <li>iframe loading="lazy" 延迟加载</li>
+          <li>物理模拟时禁用 backdrop-filter</li>
+          <li>碰撞冷却防抖机制</li>
+          <li>统一 rAF 物理循环</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 文件结构 ==================== -->
+  <div class="section">
+    <div class="section__header">
+      <div class="section__label">Files</div>
+      <h2 class="section__title">文件结构</h2>
+      <p class="section__sub">项目完整文件清单与用途说明</p>
+    </div>
+    <div class="file-table-wrap">
+      <table class="file-table">
+        <thead>
+          <tr>
+            <th>文件名</th>
+            <th>类型</th>
+            <th>用途</th>
+            <th>大小 (约)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>index.html</td>
+            <td><span class="badge badge--html">HTML</span></td>
+            <td>首页：Hero 展示、自定义光标、字符 3D 旋转</td>
+            <td>2.0 KB</td>
+          </tr>
+          <tr>
+            <td>works.html</td>
+            <td><span class="badge badge--html">HTML</span></td>
+            <td>作品页：3D 轮播图、分类筛选、灯箱查看</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>social.html</td>
+            <td><span class="badge badge--html">HTML</span></td>
+            <td>社交页：8 平台链接、扑克牌入场动画</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>music.html</td>
+            <td><span class="badge badge--html">HTML</span></td>
+            <td>音乐页：iframe 嵌入外部播放器</td>
+            <td>1.5 KB</td>
+          </tr>
+          <tr>
+            <td>suggest.html</td>
+            <td><span class="badge badge--html">HTML</span></td>
+            <td>建议页：Tally 表单 + 物理碰撞卡片系统</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>zixi.html</td>
+            <td><span class="badge badge--html">HTML</span></td>
+            <td>自习页：MBTI 沉浸自习室 (内联 CSS+JS)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>summary.html</td>
+            <td><span class="badge badge--html">HTML</span></td>
+            <td>汇总页：项目全貌概览与文档</td>
+            <td>—</td>
+          </tr>
+          <tr style="background: rgba(0,0,0,0.02);">
+            <td>styles.css</td>
+            <td><span class="badge badge--css">CSS</span></td>
+            <td>全局样式：重置、Header、流动背景、光标、响应式</td>
+            <td>8.7 KB</td>
+          </tr>
+          <tr>
+            <td>works.css</td>
+            <td><span class="badge badge--css">CSS</span></td>
+            <td>作品页：轮播 3D 透视、筛选网格、灯箱遮罩</td>
+            <td>12.5 KB</td>
+          </tr>
+          <tr>
+            <td>social.css</td>
+            <td><span class="badge badge--css">CSS</span></td>
+            <td>社交页：卡片定位网格、Hover 联动位移</td>
+            <td>5.2 KB</td>
+          </tr>
+          <tr>
+            <td>music.css</td>
+            <td><span class="badge badge--css">CSS</span></td>
+            <td>音乐页：iframe 全高度容器、圆角阴影</td>
+            <td>1.1 KB</td>
+          </tr>
+          <tr>
+            <td>suggest.css</td>
+            <td><span class="badge badge--css">CSS</span></td>
+            <td>建议页：背景卡片定位、控制面板、物理状态</td>
+            <td>6.7 KB</td>
+          </tr>
+          <tr style="background: rgba(0,0,0,0.02);">
+            <td>script.js</td>
+            <td><span class="badge badge--js">JS</span></td>
+            <td>主页交互：光标跟随、标题切换、字符 3D、视差</td>
+            <td>6.8 KB</td>
+          </tr>
+          <tr>
+            <td>works.js</td>
+            <td><span class="badge badge--js">JS</span></td>
+            <td>作品页交互：轮播控制、筛选、灯箱、视差效果</td>
+            <td>14.3 KB</td>
+          </tr>
+          <tr>
+            <td>social.js</td>
+            <td><span class="badge badge--js">JS</span></td>
+            <td>社交页交互：三阶段入场动画、光标视差、联动</td>
+            <td>12.6 KB</td>
+          </tr>
+          <tr style="background: rgba(0,0,0,0.02);">
+            <td>images/</td>
+            <td><span class="badge badge--dir">目录</span></td>
+            <td>媒体资源：建模 PNG/JPG、拍摄 JPG、调色 MOV 视频</td>
+            <td>20+ 文件</td>
+          </tr>
+          <tr>
+            <td>before.yaml / page_snapshot.yml</td>
+            <td><span class="badge badge--cfg">配置</span></td>
+            <td>YAML 数据文件（项目快照/备份）</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== 设计系统 ==================== -->
+  <div class="section">
+    <div class="section__header">
+      <div class="section__label">Design System</div>
+      <h2 class="section__title">设计系统</h2>
+      <p class="section__sub">统一的视觉语言与色彩规范</p>
+    </div>
+
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: #111111;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">主文字色</div>
+          <div class="color-swatch__hex">#111111</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: #dba460;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">品牌强调色</div>
+          <div class="color-swatch__hex">#dba460</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: #ffffff;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">页面背景</div>
+          <div class="color-swatch__hex">#ffffff</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: #888888;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">描述文字</div>
+          <div class="color-swatch__hex">#888 / #999 / #aaa</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: rgba(255,255,255,0.78); border-bottom: 1px solid #eee;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">卡片背景</div>
+          <div class="color-swatch__hex">rgba(255,255,255,0.78)</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: rgba(219,164,96,0.35);"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">光斑暖金色</div>
+          <div class="color-swatch__hex">rgba(219,164,96,0.35)</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: rgba(140,180,220,0.30);"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">光斑淡蓝色</div>
+          <div class="color-swatch__hex">rgba(140,180,220,0.30)</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background: rgba(170,150,210,0.25);"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">光斑薰衣草紫</div>
+          <div class="color-swatch__hex">rgba(170,150,210,0.25)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 交互特性矩阵 ==================== -->
+  <div class="section">
+    <div class="section__header">
+      <div class="section__label">Interactions</div>
+      <h2 class="section__title">交互特性矩阵</h2>
+      <p class="section__sub">各页面交互能力对比</p>
+    </div>
+    <div class="file-table-wrap">
+      <table class="file-table">
+        <thead>
+          <tr>
+            <th>特性</th>
+            <th>主页</th>
+            <th>作品</th>
+            <th>社交</th>
+            <th>音乐</th>
+            <th>建议</th>
+            <th>自习</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>自定义光标</td>
+            <td style="color:#dba460;">●</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td><td>○</td>
+          </tr>
+          <tr>
+            <td>视差 / 3D 变换</td>
+            <td style="color:#dba460;">●</td>
+            <td style="color:#dba460;">●</td>
+            <td style="color:#dba460;">●</td>
+            <td>○</td><td>○</td><td>○</td>
+          </tr>
+          <tr>
+            <td>入场动画</td>
+            <td style="color:#dba460;">●</td>
+            <td style="color:#dba460;">●</td>
+            <td style="color:#dba460;">●</td>
+            <td>○</td><td style="color:#dba460;">●</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+          <tr>
+            <td>拖拽 / 物理</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td><td>○</td>
+          </tr>
+          <tr>
+            <td>碰撞检测</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td><td>○</td>
+          </tr>
+          <tr>
+            <td>筛选 / 分类</td>
+            <td>○</td><td style="color:#dba460;">●</td>
+            <td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+          <tr>
+            <td>轮播 / 幻灯片</td>
+            <td>○</td><td style="color:#dba460;">●</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td>
+          </tr>
+          <tr>
+            <td>模态框 / 灯箱</td>
+            <td>○</td><td style="color:#dba460;">●</td>
+            <td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+          <tr>
+            <td>外部 API / 嵌入</td>
+            <td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+            <td style="color:#dba460;">●</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td>Canvas / 粒子</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+          <tr>
+            <td>计时器 / 番茄钟</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+          <tr>
+            <td>数据持久化</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+          <tr>
+            <td>键盘导航</td>
+            <td>○</td><td style="color:#dba460;">●</td>
+            <td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+          <tr>
+            <td>触摸支持</td>
+            <td>○</td><td style="color:#dba460;">●</td>
+            <td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+            <td>○</td>
+          </tr>
+          <tr>
+            <td>明暗模式</td>
+            <td>○</td><td>○</td><td>○</td><td>○</td><td>○</td>
+            <td style="color:#dba460;">●</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== 页脚 ==================== -->
+  <footer class="summary-footer">
+    <div class="summary-footer__inner">
+      <span>© 2026 xiec</span>
+      <span>湖南长沙 · 湖南大众传媒职业技术学院</span>
+    </div>
+  </footer>
+</body>
+</html>

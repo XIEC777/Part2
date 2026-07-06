@@ -1,0 +1,386 @@
+- generic [active] [ref=f11e1]:
+  - banner [ref=f11e2]:
+    - link "XIEC" [ref=f11e4] [cursor=pointer]:
+      - /url: ./index.html
+      - img "XIEC" [ref=f11e5]
+    - navigation [ref=f11e6]:
+      - link "主页" [ref=f11e7] [cursor=pointer]:
+        - /url: ./index.html
+      - link "作品" [ref=f11e8] [cursor=pointer]:
+        - /url: ./works.html
+      - link "社交" [ref=f11e9] [cursor=pointer]:
+        - /url: ./social.html
+      - link "音乐" [ref=f11e10] [cursor=pointer]:
+        - /url: ./music.html
+      - link "自习" [ref=f11e11] [cursor=pointer]:
+        - /url: ./zixi.html
+      - link "建议" [ref=f11e12] [cursor=pointer]:
+        - /url: "#"
+      - link "汇总" [ref=f11e13] [cursor=pointer]:
+        - /url: ./summary.html
+    - generic [ref=f11e14]:
+      - button "EN" [ref=f11e15]
+      - button "分享" [ref=f11e16]
+  - generic:
+    - generic [ref=f11e17]:
+      - iframe [ref=f11e18]:
+        - generic [active] [ref=f12e1]:
+          - banner [ref=f12e2]:
+            - link "XIEC" [ref=f12e4]:
+              - /url: ./index.html
+              - img "XIEC" [ref=f12e5]
+            - navigation [ref=f12e6]:
+              - link "主页" [ref=f12e7]:
+                - /url: "#"
+              - link "作品" [ref=f12e8]:
+                - /url: ./works.html
+              - link "社交" [ref=f12e9]:
+                - /url: ./social.html
+              - link "音乐" [ref=f12e10]:
+                - /url: ./music.html
+              - link "自习" [ref=f12e11]:
+                - /url: ./zixi.html
+              - link "建议" [ref=f12e12]:
+                - /url: ./suggest.html
+              - link "汇总" [ref=f12e13]:
+                - /url: ./summary.html
+            - generic [ref=f12e14]:
+              - button "EN" [ref=f12e15]
+              - button "分享" [ref=f12e16]
+          - generic [ref=f12e18]:
+            - generic [ref=f12e19]: hello
+            - heading "xiec 的 blog" [level=1] [ref=f12e20]
+            - generic [ref=f12e21]:
+              - generic [ref=f12e22]: 湖南大众传媒职业技术学院
+              - generic [ref=f12e23]: 湖南长沙
+      - generic [ref=f11e19]: 主页
+    - generic [ref=f11e20]:
+      - iframe [ref=f11e21]:
+        - generic [active] [ref=f13e1]:
+          - banner [ref=f13e2]:
+            - link "XIEC" [ref=f13e4] [cursor=pointer]:
+              - /url: ./index.html
+              - img "XIEC" [ref=f13e5]
+            - navigation [ref=f13e6]:
+              - link "主页" [ref=f13e7] [cursor=pointer]:
+                - /url: ./index.html
+              - link "作品" [ref=f13e8] [cursor=pointer]:
+                - /url: "#"
+              - link "社交" [ref=f13e9] [cursor=pointer]:
+                - /url: ./social.html
+              - link "音乐" [ref=f13e10] [cursor=pointer]:
+                - /url: ./music.html
+              - link "自习" [ref=f13e11] [cursor=pointer]:
+                - /url: ./zixi.html
+              - link "建议" [ref=f13e12] [cursor=pointer]:
+                - /url: ./suggest.html
+              - link "汇总" [ref=f13e13] [cursor=pointer]:
+                - /url: ./summary.html
+            - generic [ref=f13e14]:
+              - button "EN" [ref=f13e15]
+              - button "分享" [ref=f13e16]
+          - main [ref=f13e17]:
+            - generic [ref=f13e18]:
+              - generic [ref=f13e19]: PORTFOLIO
+              - heading "My Works" [level=1] [ref=f13e20]
+              - paragraph [ref=f13e21]: 精选项目与创作
+            - generic [ref=f13e22]:
+              - generic [ref=f13e23]:
+                - generic:
+                  - generic:
+                    - img "竹林小径"
+                    - generic:
+                      - generic: 建模
+                      - heading "竹林小径" [level=3]
+                - generic [ref=f13e31] [cursor=pointer]:
+                  - img "蛋挞节点" [ref=f13e32]
+                  - generic [ref=f13e33]:
+                    - generic [ref=f13e34]: 建模
+                    - heading "蛋挞节点" [level=3] [ref=f13e35]
+                - generic [ref=f13e172] [cursor=pointer]:
+                  - img "蓝莓模型" [ref=f13e173]
+                  - generic [ref=f13e174]:
+                    - generic [ref=f13e175]: 建模
+                    - heading "蓝莓模型" [level=3] [ref=f13e176]
+                - generic [ref=f13e178] [cursor=pointer]:
+                  - img "梨花" [ref=f13e179]
+                  - generic [ref=f13e180]:
+                    - generic [ref=f13e181]: 拍摄
+                    - heading "梨花" [level=3] [ref=f13e182]
+                - generic:
+                  - generic:
+                    - img "蓝猫"
+                    - generic:
+                      - generic: 拍摄
+                      - heading "蓝猫" [level=3]
+                - generic:
+                  - generic:
+                    - img "樱花"
+                    - generic:
+                      - generic: 拍摄
+                      - heading "樱花" [level=3]
+                - generic:
+                  - generic:
+                    - img "小水怪"
+                    - generic:
+                      - generic: 建模
+                      - heading "小水怪" [level=3]
+              - button "上一张" [ref=f13e42]:
+                - img [ref=f13e43]
+              - button "下一张" [ref=f13e45]:
+                - img [ref=f13e46]
+              - generic [ref=f13e48]:
+                - button "第1张" [ref=f13e49] [cursor=pointer]
+                - button "第2张" [ref=f13e50] [cursor=pointer]
+                - button "第3张" [ref=f13e51] [cursor=pointer]
+                - button "第4张" [ref=f13e52] [cursor=pointer]
+                - button "第5张" [ref=f13e53] [cursor=pointer]
+                - button "第6张" [ref=f13e54] [cursor=pointer]
+                - button "第7张" [ref=f13e55] [cursor=pointer]
+            - generic [ref=f13e56]:
+              - button "全部" [ref=f13e57]
+              - button "建模" [ref=f13e58]
+              - button "拍摄" [ref=f13e59]
+              - button "调色" [ref=f13e60]
+              - button "其他" [ref=f13e61]
+            - generic [ref=f13e62]:
+              - article [ref=f13e63] [cursor=pointer]:
+                - img "竹林小径" [ref=f13e65]
+                - generic [ref=f13e66]:
+                  - generic [ref=f13e67]: 建模
+                  - heading "竹林小径" [level=3] [ref=f13e68]
+              - article [ref=f13e69] [cursor=pointer]:
+                - img "电车蝴蝶" [ref=f13e71]
+                - generic [ref=f13e72]:
+                  - generic [ref=f13e73]: 建模
+                  - heading "电车蝴蝶" [level=3] [ref=f13e74]
+              - article [ref=f13e75] [cursor=pointer]:
+                - img "蛋挞节点" [ref=f13e77]
+                - generic [ref=f13e78]:
+                  - generic [ref=f13e79]: 建模
+                  - heading "蛋挞节点" [level=3] [ref=f13e80]
+              - article [ref=f13e81] [cursor=pointer]:
+                - img "蓝莓模型" [ref=f13e83]
+                - generic [ref=f13e84]:
+                  - generic [ref=f13e85]: 建模
+                  - heading "蓝莓模型" [level=3] [ref=f13e86]
+              - article [ref=f13e87] [cursor=pointer]:
+                - img "柠檬" [ref=f13e89]
+                - generic [ref=f13e90]:
+                  - generic [ref=f13e91]: 建模
+                  - heading "柠檬" [level=3] [ref=f13e92]
+              - article [ref=f13e93] [cursor=pointer]:
+                - img "小水怪" [ref=f13e95]
+                - generic [ref=f13e96]:
+                  - generic [ref=f13e97]: 建模
+                  - heading "小水怪" [level=3] [ref=f13e98]
+              - article [ref=f13e99] [cursor=pointer]:
+                - img "云端" [ref=f13e101]
+                - generic [ref=f13e102]:
+                  - generic [ref=f13e103]: 建模
+                  - heading "云端" [level=3] [ref=f13e104]
+              - article [ref=f13e105] [cursor=pointer]:
+                - img "电车内部" [ref=f13e107]
+                - generic [ref=f13e108]:
+                  - generic [ref=f13e109]: 建模
+                  - heading "电车内部" [level=3] [ref=f13e110]
+              - article [ref=f13e111] [cursor=pointer]:
+                - img "梨花" [ref=f13e113]
+                - generic [ref=f13e114]:
+                  - generic [ref=f13e115]: 拍摄
+                  - heading "梨花" [level=3] [ref=f13e116]
+              - article [ref=f13e117] [cursor=pointer]:
+                - img "蓝猫" [ref=f13e119]
+                - generic [ref=f13e120]:
+                  - generic [ref=f13e121]: 拍摄
+                  - heading "蓝猫" [level=3] [ref=f13e122]
+              - article [ref=f13e123] [cursor=pointer]:
+                - img "小猫" [ref=f13e125]
+                - generic [ref=f13e126]:
+                  - generic [ref=f13e127]: 拍摄
+                  - heading "小猫" [level=3] [ref=f13e128]
+              - article [ref=f13e129] [cursor=pointer]:
+                - img "橘猫" [ref=f13e131]
+                - generic [ref=f13e132]:
+                  - generic [ref=f13e133]: 拍摄
+                  - heading "橘猫" [level=3] [ref=f13e134]
+              - article [ref=f13e135] [cursor=pointer]:
+                - img "樱花" [ref=f13e137]
+                - generic [ref=f13e138]:
+                  - generic [ref=f13e139]: 拍摄
+                  - heading "樱花" [level=3] [ref=f13e140]
+              - article [ref=f13e141] [cursor=pointer]:
+                - img "樱花枝" [ref=f13e143]
+                - generic [ref=f13e144]:
+                  - generic [ref=f13e145]: 拍摄
+                  - heading "樱花枝" [level=3] [ref=f13e146]
+              - article [ref=f13e147] [cursor=pointer]:
+                - img "樱花特写" [ref=f13e149]
+                - generic [ref=f13e150]:
+                  - generic [ref=f13e151]: 拍摄
+                  - heading "樱花特写" [level=3] [ref=f13e152]
+              - article [ref=f13e153] [cursor=pointer]:
+                - generic [ref=f13e156]:
+                  - generic [ref=f13e157]: 调色
+                  - heading "东京2" [level=3] [ref=f13e158]
+              - article [ref=f13e159] [cursor=pointer]:
+                - generic [ref=f13e162]:
+                  - generic [ref=f13e163]: 调色
+                  - heading "东京8" [level=3] [ref=f13e164]
+            - button "加载更多作品" [ref=f13e166]
+          - contentinfo [ref=f13e167]:
+            - generic [ref=f13e168]:
+              - generic [ref=f13e169]: © 2026 xiec
+              - generic [ref=f13e170]: 湖南长沙
+      - generic [ref=f11e22]: 作品
+    - generic [ref=f11e23]:
+      - iframe [ref=f11e24]:
+        - generic [active] [ref=f14e1]:
+          - banner [ref=f14e2]:
+            - link "XIEC" [ref=f14e4] [cursor=pointer]:
+              - /url: ./index.html
+              - img "XIEC" [ref=f14e5]
+            - navigation [ref=f14e6]:
+              - link "主页" [ref=f14e7] [cursor=pointer]:
+                - /url: ./index.html
+              - link "作品" [ref=f14e8] [cursor=pointer]:
+                - /url: ./works.html
+              - link "社交" [ref=f14e9] [cursor=pointer]:
+                - /url: "#"
+              - link "音乐" [ref=f14e10] [cursor=pointer]:
+                - /url: ./music.html
+              - link "自习" [ref=f14e11] [cursor=pointer]:
+                - /url: ./zixi.html
+              - link "建议" [ref=f14e12] [cursor=pointer]:
+                - /url: ./suggest.html
+              - link "汇总" [ref=f14e13] [cursor=pointer]:
+                - /url: ./summary.html
+            - generic [ref=f14e14]:
+              - button "EN" [ref=f14e15]
+              - button "分享" [ref=f14e16]
+          - main [ref=f14e17]:
+            - generic [ref=f14e18]:
+              - generic [ref=f14e19]: SOCIAL
+              - heading "社交平台" [level=1] [ref=f14e20]
+              - paragraph [ref=f14e21]: 在这些地方可以找到我
+            - generic [ref=f14e22]:
+              - link "代码托管 GitHub 开源项目与代码分享，关注我的最新动态" [ref=f14e27] [cursor=pointer]:
+                - /url: https://github.com
+                - img [ref=f14e29]
+                - generic [ref=f14e31]:
+                  - generic [ref=f14e32]: 代码托管
+                  - heading "GitHub" [level=3] [ref=f14e33]
+                  - paragraph [ref=f14e34]: 开源项目与代码分享，关注我的最新动态
+                - img [ref=f14e36]
+              - link "生活方式 小红书 分享设计灵感、摄影作品与日常创作" [ref=f14e38] [cursor=pointer]:
+                - /url: https://www.xiaohongshu.com
+                - img [ref=f14e40]
+                - generic [ref=f14e44]:
+                  - generic [ref=f14e45]: 生活方式
+                  - heading "小红书" [level=3] [ref=f14e46]
+                  - paragraph [ref=f14e47]: 分享设计灵感、摄影作品与日常创作
+                - img [ref=f14e49]
+              - link "视频创作 Bilibili 创意视频、技术教程与 Vlog 记录" [ref=f14e51] [cursor=pointer]:
+                - /url: https://www.bilibili.com
+                - img [ref=f14e53]
+                - generic [ref=f14e55]:
+                  - generic [ref=f14e56]: 视频创作
+                  - heading "Bilibili" [level=3] [ref=f14e57]
+                  - paragraph [ref=f14e58]: 创意视频、技术教程与 Vlog 记录
+                - img [ref=f14e60]
+              - link "短视频 抖音 短视频创作，记录生活精彩瞬间" [ref=f14e62] [cursor=pointer]:
+                - /url: https://www.douyin.com
+                - img [ref=f14e64]
+                - generic [ref=f14e66]:
+                  - generic [ref=f14e67]: 短视频
+                  - heading "抖音" [level=3] [ref=f14e68]
+                  - paragraph [ref=f14e69]: 短视频创作，记录生活精彩瞬间
+                - img [ref=f14e71]
+              - link "即时通讯 QQ 日常聊天与好友互动，加入技术交流群" [ref=f14e73] [cursor=pointer]:
+                - /url: https://im.qq.com
+                - img [ref=f14e75]
+                - generic [ref=f14e77]:
+                  - generic [ref=f14e78]: 即时通讯
+                  - heading "QQ" [level=3] [ref=f14e79]
+                  - paragraph [ref=f14e80]: 日常聊天与好友互动，加入技术交流群
+                - img [ref=f14e82]
+              - link "即时通讯 微信 关注公众号，获取最新资讯与文章推送" [ref=f14e84] [cursor=pointer]:
+                - /url: https://weixin.qq.com
+                - img [ref=f14e86]
+                - generic [ref=f14e88]:
+                  - generic [ref=f14e89]: 即时通讯
+                  - heading "微信" [level=3] [ref=f14e90]
+                  - paragraph [ref=f14e91]: 关注公众号，获取最新资讯与文章推送
+                - img [ref=f14e93]
+              - link "社交媒体 微博 分享日常动态，关注热门话题与资讯" [ref=f14e95] [cursor=pointer]:
+                - /url: https://weibo.com
+                - img [ref=f14e97]
+                - generic [ref=f14e99]:
+                  - generic [ref=f14e100]: 社交媒体
+                  - heading "微博" [level=3] [ref=f14e101]
+                  - paragraph [ref=f14e102]: 分享日常动态，关注热门话题与资讯
+                - img [ref=f14e104]
+              - link "音乐平台 网易云音乐 分享歌单与音乐品味，一起听歌互动" [ref=f14e106] [cursor=pointer]:
+                - /url: https://music.163.com
+                - img [ref=f14e108]
+                - generic [ref=f14e110]:
+                  - generic [ref=f14e111]: 音乐平台
+                  - heading "网易云音乐" [level=3] [ref=f14e112]
+                  - paragraph [ref=f14e113]: 分享歌单与音乐品味，一起听歌互动
+                - img [ref=f14e115]
+          - contentinfo [ref=f14e23]:
+            - generic [ref=f14e24]:
+              - generic [ref=f14e25]: © 2026 xiec
+              - generic [ref=f14e26]: 湖南长沙
+      - generic [ref=f11e25]: 社交
+  - main [ref=f11e26]:
+    - generic [ref=f11e27]:
+      - generic [ref=f11e28]: FEEDBACK
+      - heading "建议反馈" [level=1] [ref=f11e29]
+      - paragraph [ref=f11e30]: 想不想让这个网站变得更好？
+    - iframe [ref=f11e32]:
+      - generic [active] [ref=f15e1]:
+        - main [ref=f15e4]:
+          - status [ref=f15e5]
+          - img "Form cover" [ref=f15e7]
+          - img "Form logo" [ref=f15e9]
+          - generic [ref=f15e11]:
+            - progressbar [ref=f15e12]: 1页中的第1页
+            - generic [ref=f15e13]:
+              - generic [ref=f15e15]: 我想了解一下你对这个网站的建议-只需要几分钟就好
+              - generic [ref=f15e18]:
+                - heading "你认为本次体验怎么样？" [level=3] [ref=f15e19]
+                - generic [ref=f15e21] [cursor=pointer]: "*"
+              - textbox "你认为本次体验怎么样？" [ref=f15e25]:
+                - /placeholder: 1到10分可以给到多少？..
+              - generic [ref=f15e28]:
+                - heading "你希望可以上线一些什么新功能？" [level=3] [ref=f15e29]
+                - generic [ref=f15e31] [cursor=pointer]: "*"
+              - textbox "你希望可以上线一些什么新功能？" [ref=f15e35]:
+                - /placeholder: 可以是任何方面......
+              - generic [ref=f15e38]:
+                - heading "最后有什么想对制作者说的吗" [level=3] [ref=f15e39]
+                - generic [ref=f15e41] [cursor=pointer]: "*"
+              - textbox "最后有什么想对制作者说的吗" [ref=f15e45]:
+                - /placeholder: 真的没有吗(；´∀｀)
+            - generic [ref=f15e48]:
+              - button "谢谢你的参与" [ref=f15e50] [cursor=pointer]:
+                - generic [ref=f15e51]: 谢谢你的参与
+                - img [ref=f15e53]
+                - generic:
+                  - img
+              - link "以Tally制作的" [ref=f15e57] [cursor=pointer]:
+                - /url: https://tally.so?utm_source=tally&utm_medium=website&utm_campaign=powered-by_embed&version=8&device=desktop
+                - generic [ref=f15e58]:
+                  - generic [ref=f15e59]: 以Tally制作的
+                  - img [ref=f15e60]
+        - alert [ref=f15e62]
+  - generic [ref=f11e33]:
+    - button "一键归位所有卡片" [ref=f11e34] [cursor=pointer]:
+      - img [ref=f11e35]
+    - button "自动归位" [ref=f11e39] [cursor=pointer]:
+      - generic [ref=f11e40]: 自动归位
+  - contentinfo [ref=f11e43]:
+    - generic [ref=f11e44]:
+      - generic [ref=f11e45]: © 2026 xiec
+      - generic [ref=f11e46]: 湖南长沙

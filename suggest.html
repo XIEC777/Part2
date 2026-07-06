@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>建议 - xiec 的 blog</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./suggest.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__left">
+      <a href="./index.html" class="header__logo">
+        <img src="./images/logo.png" alt="XIEC" class="header__logoImg" />
+      </a>
+    </div>
+    <nav class="header__nav">
+      <a href="./index.html" class="header__navLink">主页</a>
+      <a href="./works.html" class="header__navLink">作品</a>
+      <a href="./social.html" class="header__navLink">社交</a>
+      <a href="./music.html" class="header__navLink">音乐</a>
+      <a href="./zixi.html" class="header__navLink" target="_blank">自习</a>
+      <a href="#" class="header__navLink is-active">建议</a>
+      <a href="./summary.html" class="header__navLink">汇总</a>
+    </nav>
+    <div class="header__right">
+      <button class="header__lang">EN</button>
+      <button class="header__share">分享</button>
+    </div>
+  </header>
+
+  <!-- 毛玻璃 + 色彩流动背景 -->
+  <div class="flow-bg">
+    <div class="flow-blob flow-blob--1"></div>
+    <div class="flow-blob flow-blob--2"></div>
+    <div class="flow-blob flow-blob--3"></div>
+    <div class="flow-blob flow-blob--4"></div>
+    <div class="flow-blob flow-blob--5"></div>
+  </div>
+  <div class="glass-overlay"></div>
+
+  <!-- 背景漂浮小卡片（页面内嵌预览） -->
+  <div class="bg-cards">
+    <div class="bg-card bg-card--1">
+      <div class="bg-card__preview">
+        <iframe src="./index.html" class="bg-card__iframe" loading="lazy" title="主页预览"></iframe>
+      </div>
+      <span class="bg-card__label">主页</span>
+    </div>
+    <div class="bg-card bg-card--2">
+      <div class="bg-card__preview">
+        <iframe src="./works.html" class="bg-card__iframe" loading="lazy" title="作品页预览"></iframe>
+      </div>
+      <span class="bg-card__label">作品</span>
+    </div>
+    <div class="bg-card bg-card--3">
+      <div class="bg-card__preview">
+        <iframe src="./social.html" class="bg-card__iframe" loading="lazy" title="社交页预览"></iframe>
+      </div>
+      <span class="bg-card__label">社交</span>
+    </div>
+    <div class="bg-card bg-card--4">
+      <div class="bg-card__preview">
+        <iframe src="./music.html" class="bg-card__iframe" loading="lazy" title="音乐页预览"></iframe>
+      </div>
+      <span class="bg-card__label">音乐</span>
+    </div>
+  </div>
+
+  <!-- Tally 表单嵌入 -->
+  <main class="suggest">
+    <section class="suggest__hero">
+      <div class="suggest__hero-brand">FEEDBACK</div>
+      <h1 class="suggest__hero-title">建议反馈</h1>
+      <p class="suggest__hero-desc">想不想让这个网站变得更好？</p>
+    </section>
+    <div class="suggest__form">
+      <iframe
+        data-tally-src="https://tally.so/embed/rjgllM?alignLeft=1&hideTitle=1&dynamicHeight=1"
+        loading="lazy"
+        width="100%"
+        height="880"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="想不想让这个网站变得更好？"
+      ></iframe>
+    </div>
+  </main>
+
+  <!-- 左下角卡片控制面板 -->
+  <div class="card-ctrl" id="cardCtrl">
+    <button class="card-ctrl__reset" id="btnReset" title="一键归位所有卡片">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="1 4 1 10 7 10"></polyline>
+        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+      </svg>
+    </button>
+    <div class="card-ctrl__divider"></div>
+    <button class="card-ctrl__toggle" id="btnToggle" title="自动归位：开启">
+      <span class="card-ctrl__toggleText">自动归位</span>
+      <span class="card-ctrl__toggleTrack">
+        <span class="card-ctrl__toggleThumb"></span>
+      </span>
+    </button>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="suggest__footer">
+    <div class="suggest__footer-inner">
+      <span>© 2026 xiec</span>
+      <span>湖南长沙</span>
+    </div>
+  </footer>
+
+  <script>
+    var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+  </script>
+
+  <!-- 背景卡片拖拽 + 完整物理模拟（含旋转拖拽） -->
+  <script>
+    (function() {
+      var activeCard = null;
+      var startX = 0, startY = 0, startLeft = 0, startTop = 0;
+      var cardVelHistory = [];
+
+      // 旋转拖拽相关
+      var startCardAngle = 0;
+      var mouseAngleHistory = [];
+
+      var physicsMap = new Map();
+
+
+
+      // ===== 自动归位开关 =====
+      var autoReset = true; // 默认开启自动归位
+
+      // ===== 物理参数 =====
+      var GRAVITY = 800;           // 重力加速度 (px/s²)
+      var BOUNCE = 0.55;          // 地面弹性系数（更高反弹）
+      var GROUND_FRICTION = 0.85;  // 地面摩擦（每帧保留率，更滑）
+      var AIR_RESISTANCE = 0.997;  // 空气阻力（每帧保留率，更低阻力）
+      var ANGULAR_DAMPING = 0.90;  // 旋转衰减（每帧保留率）
+      var ROTATION_FACTOR = 0.55;  // 碰撞旋转反馈系数（更强的旋转）
+
+      function getPhysics(card) {
+        if (!physicsMap.has(card)) {
+          physicsMap.set(card, {
+            vy: 0, vx: 0,
+            ax: 0, ay: 0,   // 加速度 (px/s²)，用于持续加速效果
+            angle: 0, angularVel: 0,
+            animId: null,
+            onGround: false
+          });
+        }
+        return physicsMap.get(card);
+      }
+
+      function stopPhysics(card) {
+        var p = getPhysics(card);
+        // 全局物理循环会自动跳过已移除 is-physics 的卡片
+        p.vy = 0; p.vx = 0; p.angularVel = 0;
+        p.onGround = false;
+        p._collisionSeparated = false;
+        card.classList.remove('is-physics');
+        // 清除该卡片相关的碰撞冷却记录
+        var allCards = document.querySelectorAll('.bg-card');
+        var idx = Array.prototype.indexOf.call(allCards, card);
+        if (idx >= 0) {
+          var newCooldowns = {};
+          for (var key in collisionCooldowns) {
+            if (key.indexOf(idx + '-') !== 0 && key.indexOf('-' + idx) < 0) {
+              newCooldowns[key] = collisionCooldowns[key];
+            }
+          }
+          collisionCooldowns = newCooldowns;
+        }
+      }
+
+      function resetCardTransform(card) {
+        card.style.transition = '';
+        card.style.boxShadow = '';
+      }
+
+      function applyTransform(card, p, top, maxY) {
+        card.style.transform = 'rotate(' + p.angle.toFixed(2) + 'deg) translateZ(0)';
+
+        // === 动态阴影 ===
+        var groundDist = maxY - top;
+        var normalizedDist = Math.max(0, Math.min(1, groundDist / 400));
+        var blur = 10 + normalizedDist * 40;
+        var spread = -2 + normalizedDist * 15;
+        var alpha = 0.06 + (1 - normalizedDist) * 0.18;
+        card.style.boxShadow =
+          '0 ' + (4 + normalizedDist * 30).toFixed(0) + 'px ' +
+          blur.toFixed(0) + 'px ' + spread.toFixed(0) + 'px ' +
+          'rgba(0,0,0,' + alpha.toFixed(3) + ')';
+      }
+
+      // ===== SAT 碰撞检测参数 =====
+      var HITBOX_SCALE = 1.0;
+      var HITBOX_INSET_X = 0;
+      var HITBOX_INSET_Y = 0;
+      var COLLISION_ELASTIC = 0.85;
+      var COLLISION_SEPARATION_EXTRA = 60;   // 额外分离余量 (px)，确保 SAT 不再检测到碰撞
+      var COLLISION_MIN_SEPARATION_SPEED = 1000; // 最小分离速度 (px/s)，克服重力
+      var COLLISION_COOLDOWN_MS = 50;        // 碰撞冷却时间 (ms)，仅防止同帧反复抖动
+
+      // === 全局统一物理循环 ===
+      var globalPhysicsAnimId = null;
+      var globalPhysicsLastTime = 0;
+
+      function ensureGlobalPhysicsLoop() {
+        if (globalPhysicsAnimId) return;
+        globalPhysicsLastTime = performance.now();
+        function globalTick(now) {
+          globalPhysicsAnimId = requestAnimationFrame(globalTick);
+          var dt = Math.min((now - globalPhysicsLastTime) / 1000, 0.05);
+          globalPhysicsLastTime = now;
+
+          var allCards = document.querySelectorAll('.bg-card');
+          var activeCount = 0;
+
+          for (var ci = 0; ci < allCards.length; ci++) {
+            var card = allCards[ci];
+            if (!card.classList.contains('is-physics')) continue;
+            if (card.classList.contains('is-dragging')) continue;
+            var p = physicsMap.get(card);
+            if (!p) continue;
+            activeCount++;
+
+            // 使用固有尺寸计算边界
+            var size = getCardIntrinsicSize(card);
+            var cardW = size.w;
+            var cardH = size.h;
+            var maxY = window.innerHeight - cardH;
+            var maxX = window.innerWidth - cardW;
+
+            var curLeft = parseFloat(card.style.left);
+            var curTop = parseFloat(card.style.top);
+            if (isNaN(curLeft)) curLeft = card.getBoundingClientRect().left;
+            if (isNaN(curTop)) curTop = card.getBoundingClientRect().top;
+
+            // === 加速度 ===
+            // 应用自定义加速度（拖拽甩出时设置）
+            p.vx += (p.ax || 0) * dt;
+            p.vy += (p.ay || 0) * dt;
+
+            // 加速度自身衰减（模拟空气阻力对推力的抵消）
+            var accelDamping = 0.993;
+            p.ax = (p.ax || 0) * accelDamping;
+            p.ay = (p.ay || 0) * accelDamping;
+
+            // === 重力 ===
+            p.vy += GRAVITY * dt;
+
+            // === 速度阻尼 ===
+            if (p.onGround) {
+              p.vx *= GROUND_FRICTION;
+              p.vy *= GROUND_FRICTION;
+            } else {
+              p.vx *= AIR_RESISTANCE;
+              p.vy *= AIR_RESISTANCE;
+            }
+
+            // 空中角速度衰减
+            if (!p.onGround) {
+              p.angularVel *= ANGULAR_DAMPING;
+            }
+            p.angle += p.angularVel * dt;
+
+            // === 积分位置 ===
+            var newLeft, newTop;
+            if (p._collisionSeparated) {
+              p._collisionSeparated = false;
+              newLeft = parseFloat(card.style.left);
+              newTop = parseFloat(card.style.top);
+              if (isNaN(newLeft)) newLeft = curLeft + p.vx * dt;
+              if (isNaN(newTop)) newTop = curTop + p.vy * dt;
+            } else {
+              newLeft = curLeft + p.vx * dt;
+              newTop = curTop + p.vy * dt;
+            }
+
+            // === 底部碰撞 ===
+            if (newTop >= maxY) {
+              newTop = maxY;
+              if (Math.abs(p.vy) > 60) {
+                p.vy = -p.vy * BOUNCE;
+                p.onGround = false;
+                p.angularVel += p.vx * ROTATION_FACTOR * 0.5;
+              } else {
+                p.vy = 0;
+                p.vx *= 0.85;
+                p.onGround = true;
+              }
+            } else {
+              p.onGround = false;
+            }
+
+            // === 顶部碰撞 ===
+            if (newTop < 0) {
+              newTop = 0;
+              p.vy = Math.abs(p.vy) * BOUNCE;
+            }
+
+            // === 左右边界 ===
+            if (newLeft < 0) {
+              newLeft = 0;
+              p.vx = Math.abs(p.vx) * BOUNCE;
+            }
+            if (newLeft > maxX) {
+              newLeft = maxX;
+              p.vx = -Math.abs(p.vx) * BOUNCE;
+            }
+
+            // === 应用位置和变换 ===
+            card.style.left = newLeft + 'px';
+            card.style.top = newTop + 'px';
+            card.style.transition = 'none';
+            applyTransform(card, p, newTop, maxY);
+
+            // === 角度回正（地面时强回正） ===
+            if (p.onGround) {
+              p.angularVel *= 0.5;
+              var lerpRate = 0.18;
+              p.angle = p.angle * (1 - lerpRate);
+              p.angularVel += -p.angle * 12 * dt;
+              if (Math.abs(p.angle) < 0.3 && Math.abs(p.angularVel) < 0.8) {
+                p.angle = 0;
+                p.angularVel = 0;
+              }
+              applyTransform(card, p, newTop, maxY);
+            }
+
+            // === 静止检测 ===
+            var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+            var isStill = p.onGround &&
+                          speed < 15 &&
+                          Math.abs(p.angularVel) < 2;
+
+            if (isStill) {
+              p.vy = 0; p.vx = 0; p.angularVel = 0;
+              p.angle = 0;
+              p.onGround = false;
+              p.animId = null;
+              card.classList.remove('is-physics');
+
+              if (autoReset) {
+                card.style.position = '';
+                card.style.left = '';
+                card.style.top = '';
+                card.style.right = '';
+                card.style.bottom = '';
+                card.style.transform = '';
+                card.style.boxShadow = '';
+                card.style.marginTop = '';
+                card.style.zIndex = '';
+                setTimeout(function() { card.style.transition = ''; }, 300);
+              } else {
+                card.style.transform = '';
+                card.style.boxShadow = '';
+                card.style.zIndex = '';
+                setTimeout(function() { card.style.transition = ''; }, 300);
+              }
+            }
+          }
+
+          // === 卡片间碰撞检测（在所有卡片位置更新后统一执行） ===
+          // 重置每帧的碰撞对记录
+          var processedThisFrame = {};
+          for (var ci2 = 0; ci2 < allCards.length; ci2++) {
+            var cardA = allCards[ci2];
+            if (!cardA.classList.contains('is-physics')) continue;
+            if (cardA.classList.contains('is-dragging')) continue;
+            checkCardCollision(cardA, allCards, processedThisFrame);
+          }
+
+          // 如果没有活跃的物理卡片，停止全局循环
+          // 重新检查（因为碰撞可能推醒了其他卡片，静止可能移除了卡片）
+          var hasActive = false;
+          for (var ci3 = 0; ci3 < allCards.length; ci3++) {
+            if (allCards[ci3].classList.contains('is-physics') &&
+                !allCards[ci3].classList.contains('is-dragging')) {
+              hasActive = true;
+              break;
+            }
+          }
+          if (!hasActive) {
+            globalPhysicsAnimId = null;
+            return;
+          }
+        }
+        globalPhysicsAnimId = requestAnimationFrame(globalTick);
+      }
+
+      // 卡片固有尺寸缓存
+      var cardIntrinsicSizeCache = new Map();
+
+      function getCardIntrinsicSize(card) {
+        if (cardIntrinsicSizeCache.has(card)) return cardIntrinsicSizeCache.get(card);
+        // 使用 offsetWidth/offsetHeight（不受 CSS transform 旋转影响）
+        var w = card.offsetWidth;
+        var h = card.offsetHeight;
+        // 如果卡片是 fixed 定位且不在 DOM 流中，offset 可能不准确，
+        // 回退到 CSS 定义的 width: 360px，高度按 16:9 估算
+        if (!w || !h) {
+          w = 360;
+          h = 360 * 0.5625 + 12 * 2 + 10 + 13 * 1.4; // preview + padding + gap + label
+          h = Math.round(h); // ~248px
+        }
+        var size = { w: w, h: h };
+        cardIntrinsicSizeCache.set(card, size);
+        return size;
+      }
+
+      function getCardVertices(card) {
+        var p = getPhysics(card);
+        var angle = (p.angle || 0) * Math.PI / 180;
+        var size = getCardIntrinsicSize(card);
+
+        var hw = (size.w * HITBOX_SCALE - HITBOX_INSET_X * 2) / 2;
+        var hh = (size.h * HITBOX_SCALE - HITBOX_INSET_Y * 2) / 2;
+        if (hw < 10) hw = 10;
+        if (hh < 10) hh = 10;
+
+        // 卡片中心位置：从 style.left/top 计算（fixed 定位）
+        var cLeft = parseFloat(card.style.left);
+        var cTop = parseFloat(card.style.top);
+        if (isNaN(cLeft) || isNaN(cTop)) {
+          // fallback: 用 getBoundingClientRect 的中心
+          var rect = card.getBoundingClientRect();
+          cLeft = rect.left;
+          cTop = rect.top;
+          // 但 rect 尺寸是旋转后的包围盒，需要修正中心
+          // 直接用 rect 中心作为近似
+          var cx = rect.left + rect.width / 2;
+          var cy = rect.top + rect.height / 2;
+          var cos = Math.cos(angle);
+          var sin = Math.sin(angle);
+          return [
+            { x: cx + (-hw * cos - (-hh) * sin), y: cy + (-hw * sin + (-hh) * cos) },
+            { x: cx + ( hw * cos - (-hh) * sin), y: cy + ( hw * sin + (-hh) * cos) },
+            { x: cx + ( hw * cos -   hh  * sin), y: cy + ( hw * sin +   hh  * cos) },
+            { x: cx + (-hw * cos -   hh  * sin), y: cy + (-hw * sin +   hh  * cos) }
+          ];
+        }
+
+        // 正确做法：卡片中心 = left + w/2, top + h/2
+        var cx = cLeft + size.w / 2;
+        var cy = cTop + size.h / 2;
+
+        var cos = Math.cos(angle);
+        var sin = Math.sin(angle);
+
+        // 四个角（以卡片中心为原点，旋转后 + 中心偏移）
+        return [
+          { x: cx + (-hw * cos - (-hh) * sin), y: cy + (-hw * sin + (-hh) * cos) },
+          { x: cx + ( hw * cos - (-hh) * sin), y: cy + ( hw * sin + (-hh) * cos) },
+          { x: cx + ( hw * cos -   hh  * sin), y: cy + ( hw * sin +   hh  * cos) },
+          { x: cx + (-hw * cos -   hh  * sin), y: cy + (-hw * sin +   hh  * cos) }
+        ];
+      }
+
+      function getAxes(vertices) {
+        var axes = [];
+        for (var i = 0; i < vertices.length; i++) {
+          var next = vertices[(i + 1) % vertices.length];
+          var edgeX = next.x - vertices[i].x;
+          var edgeY = next.y - vertices[i].y;
+          var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+          if (len < 0.001) continue;
+          axes.push({ x: -edgeY / len, y: edgeX / len });
+        }
+        return axes;
+      }
+
+      function project(vertices, axis) {
+        var min = Infinity, max = -Infinity;
+        for (var i = 0; i < vertices.length; i++) {
+          var dot = vertices[i].x * axis.x + vertices[i].y * axis.y;
+          if (dot < min) min = dot;
+          if (dot > max) max = dot;
+        }
+        return { min: min, max: max };
+      }
+
+      function satCollision(vertsA, vertsB) {
+        var axes = getAxes(vertsA).concat(getAxes(vertsB));
+        var minOverlap = Infinity;
+        var minAxis = null;
+
+        for (var i = 0; i < axes.length; i++) {
+          var axis = axes[i];
+          var projA = project(vertsA, axis);
+          var projB = project(vertsB, axis);
+
+          var gap;
+          if (projA.min < projB.min) {
+            gap = projB.min - projA.max;
+          } else {
+            gap = projA.min - projB.max;
+          }
+
+          if (gap > 0) return null;
+
+          var overlap = Math.abs(gap);
+          if (overlap < minOverlap) {
+            minOverlap = overlap;
+            minAxis = axis;
+          }
+        }
+
+        return { colliding: true, overlap: minOverlap, axis: minAxis };
+      }
+
+      // 碰撞冷却记录：key = "idxA-idxB" -> 上次碰撞时间戳
+      var collisionCooldowns = {};
+
+      function checkCardCollision(card, allCards, processedThisFrame) {
+        var p = getPhysics(card);
+        var vertsA = getCardVertices(card);
+        var now = performance.now();
+
+        for (var i = 0; i < allCards.length; i++) {
+          var other = allCards[i];
+          if (other === card) continue;
+
+          // 同帧去重：用 processedThisFrame 标记
+          var pairKey = Math.min(
+            Array.prototype.indexOf.call(allCards, card),
+            i
+          ) + '-' + Math.max(
+            Array.prototype.indexOf.call(allCards, card),
+            i
+          );
+          if (processedThisFrame[pairKey]) continue;
+          processedThisFrame[pairKey] = true;
+
+          // 碰撞冷却
+          if (collisionCooldowns[pairKey] && (now - collisionCooldowns[pairKey]) < COLLISION_COOLDOWN_MS) {
+            continue;
+          }
+
+          var vertsB = getCardVertices(other);
+          var result = satCollision(vertsA, vertsB);
+          if (!result) continue;
+
+          // 标记处理
+          collisionCooldowns[pairKey] = now;
+
+          var nx = result.axis.x;
+          var ny = result.axis.y;
+          var overlap = result.overlap;
+
+          // 使用卡片固有尺寸计算中心位置（而非 getBoundingClientRect 的包围盒）
+          var sizeA = getCardIntrinsicSize(card);
+          var sizeB = getCardIntrinsicSize(other);
+
+          // 获取卡片的实际左上角位置
+          // 对于物理模式卡片：style.left/top 是准确的
+          // 对于 CSS 定位卡片：用 getBoundingClientRect 获取，但需要修正
+          var cLeftA = parseFloat(card.style.left);
+          var cTopA = parseFloat(card.style.top);
+          if (isNaN(cLeftA) || isNaN(cTopA)) {
+            var rectA = card.getBoundingClientRect();
+            cLeftA = rectA.left;
+            cTopA = rectA.top;
+          }
+          var cxA = cLeftA + sizeA.w / 2;
+          var cyA = cTopA + sizeA.h / 2;
+
+          var cLeftB = parseFloat(other.style.left);
+          var cTopB = parseFloat(other.style.top);
+          if (isNaN(cLeftB) || isNaN(cTopB)) {
+            var rectB = other.getBoundingClientRect();
+            cLeftB = rectB.left;
+            cTopB = rectB.top;
+          }
+          var cxB = cLeftB + sizeB.w / 2;
+          var cyB = cTopB + sizeB.h / 2;
+
+          // 法线从 card 指向 other
+          if ((cxB - cxA) * nx + (cyB - cyA) * ny < 0) {
+            nx = -nx;
+            ny = -ny;
+          }
+
+          // 总分离量：每个卡片推开 overlap + EXTRA，确保彻底分离
+          var totalSep = overlap + COLLISION_SEPARATION_EXTRA;
+          var sepX = nx * totalSep;
+          var sepY = ny * totalSep;
+
+          // === 分离两个卡片 ===
+          // 先推开位置，确保不再重叠
+          card.style.left = (cLeftA - sepX) + 'px';
+          card.style.top = (cTopA - sepY) + 'px';
+
+          // 标记卡片刚被碰撞推开，跳过当帧速度积分（避免速度又把卡片拉回去）
+          p._collisionSeparated = true;
+
+          if (!other.classList.contains('is-dragging')) {
+            if (!other.classList.contains('is-physics')) {
+              other.style.position = 'fixed';
+              other.style.left = cLeftB + 'px';
+              other.style.top = cTopB + 'px';
+              other.style.right = 'auto';
+              other.style.bottom = 'auto';
+              other.style.transition = 'none';
+              other.classList.add('is-physics');
+              var op2 = getPhysics(other);
+              if (!op2.animId || op2.animId === 1) {
+                startGravity(other);
+              }
+            }
+            other.style.left = (cLeftB + sepX) + 'px';
+            other.style.top = (cTopB + sepY) + 'px';
+            var op3 = getPhysics(other);
+            op3._collisionSeparated = true;
+          }
+
+          // === 速度响应 ===
+          var op = getPhysics(other);
+          var relVx = p.vx - (op.vx || 0);
+          var relVy = p.vy - (op.vy || 0);
+          var relVelAlongNormal = relVx * nx + relVy * ny;
+
+          // 核心：反转速度中沿法线靠近的分量，改为远离
+          // 保留切向速度不变（卡片沿表面滑动）
+          if (relVelAlongNormal < 0) {
+            // 相对速度在靠近：反转法线分量
+            var relNx = relVelAlongNormal * nx;
+            var relNy = relVelAlongNormal * ny;
+            // 各承担一半的反转
+            p.vx -= relNx;
+            p.vy -= relNy;
+            if (op.vx !== undefined) {
+              op.vx += relNx;
+              op.vy += relNy;
+            }
+          }
+
+          // 额外给一个最小分离速度，防止重力立即拉回
+          var minSepSpeed = 350;
+          var curSepSpeedA = -(p.vx * nx + p.vy * ny);
+          if (curSepSpeedA < minSepSpeed) {
+            var extraSepA = minSepSpeed - curSepSpeedA;
+            p.vx -= extraSepA * nx;
+            p.vy -= extraSepA * ny;
+          }
+          if (op.vx !== undefined) {
+            var curSepSpeedB = op.vx * nx + op.vy * ny;
+            if (curSepSpeedB < minSepSpeed) {
+              var extraSepB = minSepSpeed - curSepSpeedB;
+              op.vx += extraSepB * nx;
+              op.vy += extraSepB * ny;
+            }
+          }
+
+          // === 正确的角度碰撞偏移 ===
+          // 计算碰撞点在卡片本地坐标中的位置，用于产生正确的角速度
+          // 碰撞点近似为两个卡片中心的中间点
+          var contactX = (cxA + cxB) / 2;
+          var contactY = (cyA + cyB) / 2;
+
+          // card 的碰撞点相对于其中心的偏移向量
+          var rx = contactX - cxA;
+          var ry = contactY - cyA;
+          // other 的碰撞点相对于其中心的偏移向量
+          var orx = contactX - cxB;
+          var ory = contactY - cyB;
+
+          // 碰撞冲量（质量相同，简化为速度变化量）
+          // 相对速度沿法线方向的分量变化
+          var impulseMag = minSepSpeed * 2; // 两卡片分离速度之和
+          if (relVelAlongNormal > 0) {
+            impulseMag += relVelAlongNormal;
+          }
+          // 弹性系数缩放
+          impulseMag *= (1 + COLLISION_ELASTIC);
+
+          // 角速度 = 冲量切向分量 × 力臂 / 转动惯量
+          // 简化：转动惯量 I ≈ m * (w² + h²) / 12，设 m=1
+          var inertiaA = (sizeA.w * sizeA.w + sizeA.h * sizeA.h) / 12;
+          var inertiaB = (sizeB.w * sizeB.w + sizeB.h * sizeB.h) / 12;
+
+          // 冲量方向 = 法线方向
+          var impX = -impulseMag * nx; // card 受到的冲量（远离 other）
+          var impY = -impulseMag * ny;
+
+          // 扭矩 = r × F = rx * Fy - ry * Fx
+          var torqueA = rx * impY - ry * impX;
+          var torqueB = orx * (-impY) - ory * (-impX); // other 受到反向冲量
+
+          // 角加速度 = 扭矩 / 转动惯量，然后累积为角速度变化
+          // 单位转换：冲量单位是 px/s，角速度单位是 deg/s
+          // 1 弧度 ≈ 57.3 度
+          var angVelChangeA = (torqueA / inertiaA) * (180 / Math.PI);
+          var angVelChangeB = (torqueB / inertiaB) * (180 / Math.PI);
+
+          // 限制角速度变化范围，允许更强的旋转反馈
+          var maxAngChange = 700;
+          angVelChangeA = Math.max(-maxAngChange, Math.min(maxAngChange, angVelChangeA));
+          angVelChangeB = Math.max(-maxAngChange, Math.min(maxAngChange, angVelChangeB));
+
+          p.angularVel += angVelChangeA;
+          op.angularVel += angVelChangeB;
+
+          // 碰撞后：只有当卡片被弹离地面足够远时才重置 onGround
+          // sepY > 0 表示法线指向上方（卡片被向上推），此时应该重置 onGround
+          if (p.onGround && sepY > 10) p.onGround = false;
+          if (op.onGround && sepY < -10) op.onGround = false;
+        }
+      }
+
+      // 将单张卡片恢复到 CSS 原始位置
+      function resetCard(card) {
+        stopPhysics(card);
+        var p = getPhysics(card);
+        p.angle = 0; p.vy = 0; p.vx = 0; p.angularVel = 0;
+        p.onGround = false;
+        card.classList.remove('is-physics', 'is-dragging');
+        card.style.position = '';
+        card.style.left = '';
+        card.style.top = '';
+        card.style.right = '';
+        card.style.bottom = '';
+        card.style.transform = '';
+        card.style.boxShadow = '';
+        card.style.marginTop = '';
+        card.style.zIndex = '';
+        card.style.transition = '';
+      }
+
+      // 一键归位所有卡片
+      function resetAllCards() {
+        var allCards = document.querySelectorAll('.bg-card');
+        for (var i = 0; i < allCards.length; i++) {
+          resetCard(allCards[i]);
+        }
+        // 清除碰撞冷却记录
+        collisionCooldowns = {};
+        // 重新启动漂浮动画
+        for (var j = 0; j < idleAnimData.length; j++) {
+          idleAnimData[j].card.style.marginTop = '';
+        }
+      }
+
+      function startGravity(card) {
+        var p = getPhysics(card);
+        if (p.animId) { cancelAnimationFrame(p.animId); p.animId = null; }
+        p.onGround = false;
+        card.classList.add('is-physics');
+        // 启动全局物理循环（如果尚未运行）
+        ensureGlobalPhysicsLoop();
+      }
+
+      // ===== 拖拽覆盖层 =====
+      var dragOverlay = document.createElement('div');
+      dragOverlay.style.cssText =
+        'position:fixed;left:0;top:0;width:100%;height:100%;z-index:9998;' +
+        'cursor:grabbing;display:none;pointer-events:none;';
+      document.body.appendChild(dragOverlay);
+
+      // ===== 核心：1:1 跟手拖拽 =====
+      // mousedown 时记录鼠标位置和卡片当前位置，切换到 fixed 定位。
+      // mousemove 时，新位置 = 初始位置 + 鼠标偏移（无放大，完全跟手）。
+      // 直接写 DOM，无 rAF 延迟。
+
+      var cachedCardW = 0, cachedCardH = 0;
+
+      function onMouseDown(e) {
+        var card = e.target.closest('.bg-card');
+        if (!card) return;
+        e.preventDefault();
+        activeCard = card;
+        var p = getPhysics(card);
+        stopPhysics(card);
+        card.classList.add('is-dragging');
+        resetCardTransform(card);
+        card.style.marginTop = '';
+
+        dragOverlay.style.display = 'block';
+        dragOverlay.style.cursor = 'grabbing';
+
+        var rect = card.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+        cachedCardW = rect.width;
+        cachedCardH = rect.height;
+        startCardAngle = p.angle || 0;
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        cardVelHistory = [];
+        mouseAngleHistory = [];
+
+        // 锁定为 fixed 定位，基准是卡片当前在屏幕上的实际位置
+        card.style.position = 'fixed';
+        card.style.left = startLeft + 'px';
+        card.style.top = startTop + 'px';
+        card.style.right = 'auto';
+        card.style.bottom = 'auto';
+        card.style.transition = 'none';
+        card.style.transform = 'rotate(' + (p.angle || 0).toFixed(2) + 'deg) translateZ(0)';
+        card.style.zIndex = '999';
+      }
+
+      function onMouseMove(e) {
+        if (!activeCard) return;
+        var p = getPhysics(activeCard);
+        var now = performance.now();
+
+        // 1:1 跟手：新位置 = 起始位置 + 鼠标偏移（无放大系数）
+        var newLeft = startLeft + (e.clientX - startX);
+        var newTop = startTop + (e.clientY - startY);
+
+        // 边界软约束（允许略微超出再弹回的感觉）
+        var margin = 20;
+        var maxY = window.innerHeight - cachedCardH;
+        var maxX = window.innerWidth - cachedCardW;
+        if (newTop > maxY + margin) newTop = maxY + margin;
+        if (newTop < -margin) newTop = -margin;
+        if (newLeft < -margin) newLeft = -margin;
+        if (newLeft > maxX + margin) newLeft = maxX + margin;
+
+        // 旋转：基于卡片中心和鼠标的相对角度
+        var centerX = newLeft + cachedCardW / 2;
+        var centerY = newTop + cachedCardH / 2;
+        var mouseAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * 180 / Math.PI;
+        var initialMouseAngle = Math.atan2(startY - (startTop + cachedCardH / 2), startX - (startLeft + cachedCardW / 2)) * 180 / Math.PI;
+        var mouseDelta = mouseAngle - initialMouseAngle;
+        while (mouseDelta > 180) mouseDelta -= 360;
+        while (mouseDelta < -180) mouseDelta += 360;
+        var newAngle = startCardAngle + mouseDelta * 1.0; // 1:1 旋转映射
+
+        // 直接写 DOM（无 rAF 延迟），保留 translateZ(0) 维持 GPU 合成层
+        p.angle = newAngle;
+        activeCard.style.left = newLeft + 'px';
+        activeCard.style.top = newTop + 'px';
+        activeCard.style.transform = 'rotate(' + newAngle.toFixed(2) + 'deg) translateZ(0)';
+
+        // 记录用于松手时计算速度
+        cardVelHistory.push({ x: newLeft, y: newTop, t: now });
+        if (cardVelHistory.length > 8) cardVelHistory.shift();
+
+        mouseAngleHistory.push({ angle: mouseAngle, t: now });
+        if (mouseAngleHistory.length > 8) mouseAngleHistory.shift();
+      }
+
+      function onMouseUp(e) {
+        if (!activeCard) return;
+        var card = activeCard;
+        card.classList.remove('is-dragging');
+        dragOverlay.style.display = 'none';
+
+        var p = getPhysics(card);
+        var now = performance.now();
+
+        // === 从卡片位置历史计算甩出速度 ===
+        if (cardVelHistory.length >= 2) {
+          // 使用最近多帧做加权平均，既灵敏又平滑
+          var totalW = 0, vxSum = 0, vySum = 0;
+          for (var i = 1; i < cardVelHistory.length; i++) {
+            var a = cardVelHistory[i - 1];
+            var b = cardVelHistory[i];
+            var dtSample = (b.t - a.t) / 1000;
+            if (dtSample > 0.001) {
+              // 越近的帧权重越高
+              var w = dtSample * (i + 1);
+              vxSum += ((b.x - a.x) / dtSample) * w;
+              vySum += ((b.y - a.y) / dtSample) * w;
+              totalW += w;
+            }
+          }
+          if (totalW > 0) {
+            p.vx = vxSum / totalW;
+            p.vy = vySum / totalW;
+          }
+        }
+
+        // === 从鼠标角度历史计算角速度 ===
+        if (mouseAngleHistory.length >= 2) {
+          var first = mouseAngleHistory[0];
+          var lastA = mouseAngleHistory[mouseAngleHistory.length - 1];
+          var totalDt = (lastA.t - first.t) / 1000;
+          if (totalDt > 0.02) {
+            var aDiff = lastA.angle - first.angle;
+            while (aDiff > 180) aDiff -= 360;
+            while (aDiff < -180) aDiff += 360;
+            p.angularVel = aDiff / totalDt;
+          }
+        }
+
+        // === 松手速度增强：放大速度以产生"甩出"效果 ===
+        p.vx *= 3.5;
+        p.vy *= 3.2;
+        p.angularVel *= 1.0;
+
+        // 平移速度限制
+        var maxSpeed = 6000;
+        var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if (spd > maxSpeed) { p.vx *= maxSpeed / spd; p.vy *= maxSpeed / spd; }
+
+        // 角速度限制
+        var maxAngVel = 1200;
+        if (Math.abs(p.angularVel) > maxAngVel) {
+          p.angularVel = p.angularVel > 0 ? maxAngVel : -maxAngVel;
+        }
+
+        // === 根据甩出方向设置持续加速度 ===
+        // 速度越快，加速度越大（上限 1000 px/s²）
+        var accelMag = Math.min(spd * 0.18, 1000);
+        if (spd > 30) {
+          p.ax = (p.vx / spd) * accelMag;
+          p.ay = (p.vy / spd) * accelMag;
+        } else {
+          p.ax = 0;
+          p.ay = 0;
+        }
+
+        startGravity(card);
+        activeCard = null;
+      }
+
+      // ===== 触摸事件 =====
+      function onTouchStart(e) {
+        var card = e.target.closest('.bg-card');
+        if (!card) return;
+        var touch = e.touches[0];
+        activeCard = card;
+        var p = getPhysics(card);
+        stopPhysics(card);
+        card.classList.add('is-dragging');
+        resetCardTransform(card);
+        card.style.marginTop = '';
+
+        dragOverlay.style.display = 'block';
+        dragOverlay.style.cursor = 'grabbing';
+
+        var rect = card.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+        cachedCardW = rect.width;
+        cachedCardH = rect.height;
+        startCardAngle = p.angle || 0;
+
+        startX = touch.clientX;
+        startY = touch.clientY;
+
+        cardVelHistory = [];
+        mouseAngleHistory = [];
+
+        card.style.position = 'fixed';
+        card.style.left = startLeft + 'px';
+        card.style.top = startTop + 'px';
+        card.style.right = 'auto';
+        card.style.bottom = 'auto';
+        card.style.transition = 'none';
+        card.style.transform = 'rotate(' + (p.angle || 0).toFixed(2) + 'deg) translateZ(0)';
+        card.style.zIndex = '999';
+      }
+
+      function onTouchMove(e) {
+        if (!activeCard) return;
+        e.preventDefault();
+        var touch = e.touches[0];
+        var p = getPhysics(activeCard);
+        var now = performance.now();
+
+        var newLeft = startLeft + (touch.clientX - startX);
+        var newTop = startTop + (touch.clientY - startY);
+
+        var margin = 20;
+        var maxY = window.innerHeight - cachedCardH;
+        var maxX = window.innerWidth - cachedCardW;
+        if (newTop > maxY + margin) newTop = maxY + margin;
+        if (newTop < -margin) newTop = -margin;
+        if (newLeft < -margin) newLeft = -margin;
+        if (newLeft > maxX + margin) newLeft = maxX + margin;
+
+        var centerX = newLeft + cachedCardW / 2;
+        var centerY = newTop + cachedCardH / 2;
+        var mouseAngle = Math.atan2(touch.clientY - centerY, touch.clientX - centerX) * 180 / Math.PI;
+        var initialMouseAngle = Math.atan2(startY - (startTop + cachedCardH / 2), startX - (startLeft + cachedCardW / 2)) * 180 / Math.PI;
+        var mouseDelta = mouseAngle - initialMouseAngle;
+        while (mouseDelta > 180) mouseDelta -= 360;
+        while (mouseDelta < -180) mouseDelta += 360;
+        var newAngle = startCardAngle + mouseDelta;
+
+        p.angle = newAngle;
+        activeCard.style.left = newLeft + 'px';
+        activeCard.style.top = newTop + 'px';
+        activeCard.style.transform = 'rotate(' + newAngle.toFixed(2) + 'deg) translateZ(0)';
+
+        cardVelHistory.push({ x: newLeft, y: newTop, t: now });
+        if (cardVelHistory.length > 8) cardVelHistory.shift();
+
+        mouseAngleHistory.push({ angle: mouseAngle, t: now });
+        if (mouseAngleHistory.length > 8) mouseAngleHistory.shift();
+      }
+
+      function onTouchEnd(e) {
+        if (!activeCard) return;
+        var card = activeCard;
+        card.classList.remove('is-dragging');
+        dragOverlay.style.display = 'none';
+
+        var p = getPhysics(card);
+        var now = performance.now();
+
+        if (cardVelHistory.length >= 2) {
+          var totalW = 0, vxSum = 0, vySum = 0;
+          for (var i = 1; i < cardVelHistory.length; i++) {
+            var a = cardVelHistory[i - 1];
+            var b = cardVelHistory[i];
+            var dtSample = (b.t - a.t) / 1000;
+            if (dtSample > 0.001) {
+              var w = dtSample * (i + 1);
+              vxSum += ((b.x - a.x) / dtSample) * w;
+              vySum += ((b.y - a.y) / dtSample) * w;
+              totalW += w;
+            }
+          }
+          if (totalW > 0) {
+            p.vx = vxSum / totalW;
+            p.vy = vySum / totalW;
+          }
+        }
+
+        if (mouseAngleHistory.length >= 2) {
+          var first = mouseAngleHistory[0];
+          var lastA = mouseAngleHistory[mouseAngleHistory.length - 1];
+          var totalDt = (lastA.t - first.t) / 1000;
+          if (totalDt > 0.02) {
+            var aDiff = lastA.angle - first.angle;
+            while (aDiff > 180) aDiff -= 360;
+            while (aDiff < -180) aDiff += 360;
+            p.angularVel = aDiff / totalDt;
+          }
+        }
+
+        p.vx *= 3.5;
+        p.vy *= 3.2;
+        p.angularVel *= 1.0;
+
+        var maxSpeed = 6000;
+        var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if (spd > maxSpeed) { p.vx *= maxSpeed / spd; p.vy *= maxSpeed / spd; }
+
+        var maxAngVel = 1200;
+        if (Math.abs(p.angularVel) > maxAngVel) {
+          p.angularVel = p.angularVel > 0 ? maxAngVel : -maxAngVel;
+        }
+
+        // === 根据甩出方向设置持续加速度 ===
+        var accelMag = Math.min(spd * 0.18, 1000);
+        if (spd > 30) {
+          p.ax = (p.vx / spd) * accelMag;
+          p.ay = (p.vy / spd) * accelMag;
+        } else {
+          p.ax = 0;
+          p.ay = 0;
+        }
+
+        startGravity(card);
+        activeCard = null;
+      }
+
+      // ===== 绑定事件 =====
+      document.addEventListener('mousedown', onMouseDown);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+
+      document.addEventListener('touchstart', onTouchStart, { passive: false });
+      document.addEventListener('touchmove', onTouchMove, { passive: false });
+      document.addEventListener('touchend', onTouchEnd);
+
+      // ===== 漂浮动画：用 JS margin-top 实现，不干扰 transform 旋转 =====
+      var idleCards = document.querySelectorAll('.bg-card');
+      var idleAnimData = [];
+      for (var i = 0; i < idleCards.length; i++) {
+        idleAnimData.push({
+          card: idleCards[i],
+          offset: (i * 2.3) % 7,
+          amplitude: 16
+        });
+      }
+
+      function idleFloatLoop(ts) {
+        var sec = ts / 1000;
+        for (var i = 0; i < idleAnimData.length; i++) {
+          var d = idleAnimData[i];
+          var card = d.card;
+          // 正在拖拽或物理模拟中的卡片跳过漂浮
+          if (card.classList.contains('is-dragging') || card.classList.contains('is-physics')) continue;
+          var floatY = Math.sin((sec - d.offset) / 7 * Math.PI * 2) * d.amplitude;
+          card.style.marginTop = floatY + 'px';
+        }
+        requestAnimationFrame(idleFloatLoop);
+      }
+      requestAnimationFrame(idleFloatLoop);
+
+      // ===== 控制面板事件 =====
+      var btnToggle = document.getElementById('btnToggle');
+      var btnReset = document.getElementById('btnReset');
+
+      // 更新开关 UI 状态
+      function updateToggleUI() {
+        if (autoReset) {
+          btnToggle.classList.remove('is-off');
+          btnToggle.title = '自动归位：开启';
+        } else {
+          btnToggle.classList.add('is-off');
+          btnToggle.title = '自动归位：关闭';
+        }
+      }
+
+      btnToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        autoReset = !autoReset;
+        updateToggleUI();
+      });
+
+      btnReset.addEventListener('click', function(e) {
+        e.stopPropagation();
+        resetAllCards();
+      });
+
+      // 初始状态
+      updateToggleUI();
+    })();
+  </script>
+</body>
+</html>

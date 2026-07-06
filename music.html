@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>音乐 - xiec 的 blog</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./music.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__left">
+      <a href="./index.html" class="header__logo">
+        <img src="./images/logo.png" alt="XIEC" class="header__logoImg" />
+      </a>
+    </div>
+    <nav class="header__nav">
+      <a href="./index.html" class="header__navLink">主页</a>
+      <a href="./works.html" class="header__navLink">作品</a>
+      <a href="./social.html" class="header__navLink">社交</a>
+      <a href="#" class="header__navLink is-active">音乐</a>
+      <a href="./zixi.html" class="header__navLink" target="_blank">自习</a>
+      <a href="./suggest.html" class="header__navLink">建议</a>
+      <a href="./summary.html" class="header__navLink">汇总</a>
+    </nav>
+    <div class="header__right">
+      <button class="header__lang">EN</button>
+      <button class="header__share">分享</button>
+    </div>
+  </header>
+
+  <!-- 毛玻璃 + 色彩流动背景 -->
+  <div class="flow-bg">
+    <div class="flow-blob flow-blob--1"></div>
+    <div class="flow-blob flow-blob--2"></div>
+    <div class="flow-blob flow-blob--3"></div>
+    <div class="flow-blob flow-blob--4"></div>
+    <div class="flow-blob flow-blob--5"></div>
+  </div>
+  <div class="glass-overlay"></div>
+
+  <!-- 嵌入外部音乐网站 -->
+  <iframe
+    class="music__frame"
+    src="https://forum.hanakos.cc/music"
+    title="Hanakos Music"
+    allow="fullscreen"
+    loading="lazy"
+  ></iframe>
+
+  <!-- 页脚 -->
+  <footer class="music__footer">
+    <div class="music__footer-inner">
+      <span>© 2026 xiec</span>
+      <span>湖南长沙</span>
+    </div>
+  </footer>
+</body>
+</html>
