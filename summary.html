@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>项目汇总 - xiec 的 blog</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./summary.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__left">
+      <a href="./index.html" class="header__logo">
+        <span class="header__logoText">HI XIEC</span>
+      </a>
+    </div>
+    <nav class="header__nav">
+      <a href="./index.html" class="header__navLink">主页</a>
+      <a href="./works.html" class="header__navLink">作品</a>
+      <a href="./social.html" class="header__navLink">社交</a>
+      <a href="./music.html" class="header__navLink">音乐</a>
+      <a href="./zixi.html" class="header__navLink" target="_blank">自习</a>
+      <a href="./suggest.html" class="header__navLink">建议</a>
+    </nav>
+    <div class="header__right">
+      <button class="header__lang">EN</button>
+      <button class="header__share">分享</button>
+    </div>
+  </header>
+
+  <!-- 毛玻璃 + 色彩流动背景 -->
+  <div class="flow-bg">
+    <div class="flow-blob flow-blob--1"></div>
+    <div class="flow-blob flow-blob--2"></div>
+    <div class="flow-blob flow-blob--3"></div>
+    <div class="flow-blob flow-blob--4"></div>
+    <div class="flow-blob flow-blob--5"></div>
+  </div>
+  <div class="glass-overlay"></div>
+
+  <!-- 汇总展示区域 -->
+  <main class="summary">
+    <!-- 顶部标题 -->
+    <section class="summary__hero">
+      <div class="summary__hero-brand">OVERVIEW</div>
+      <h1 class="summary__hero-title">项目结构汇总</h1>
+      <p class="summary__hero-desc">xiec 的 blog — 六个页面的完整架构、功能与技术实现一览</p>
+    </section>
+
+    <!-- 全局架构概览 -->
+    <section class="summary__section">
+      <h2 class="summary__section-title">
+        <span class="summary__section-icon">🏗️</span>
+        全局架构
+      </h2>
+      <div class="summary__arch-grid">
+        <!-- 共享组件卡片 -->
+        <div class="summary__arch-card">
+          <div class="summary__arch-card-head">
+            <div class="summary__arch-card-icon" style="background:#dba460;">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="white" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="white" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <span class="summary__arch-tag">共享组件</span>
+              <h3 class="summary__arch-title">Header 导航栏</h3>
+            </div>
+          </div>
+          <div class="summary__arch-body">
+            <ul>
+              <li>固定定位 (position: fixed, z-index: 99)</li>
+              <li>毛玻璃效果 (backdrop-filter: blur(12px))</li>
+              <li>三栏布局：左侧 Logo + 居中导航 + 右侧工具</li>
+              <li>导航链接下划线 hover 动画</li>
+              <li>当前页高亮 (is-active)</li>
+              <li>响应式：移动端简化布局</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 共享背景卡片 -->
+        <div class="summary__arch-card">
+          <div class="summary__arch-card-head">
+            <div class="summary__arch-card-icon" style="background:#8cb4dc;">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="white" opacity="0.5"/></svg>
+            </div>
+            <div>
+              <span class="summary__arch-tag">共享背景</span>
+              <h3 class="summary__arch-title">流动色彩 + 毛玻璃</h3>
+            </div>
+          </div>
+          <div class="summary__arch-body">
+            <ul>
+              <li>5 个彩色光斑 (.flow-blob)：暖金 / 淡蓝 / 薰衣草 / 天蓝 / 暖粉</li>
+              <li>独立漂移动画 (flowDrift1-5)，16-22s 循环</li>
+              <li>全屏毛玻璃覆盖 (blur: 60px)</li>
+              <li>主页专属：叠加圆点纹理背景</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 设计系统卡片 -->
+        <div class="summary__arch-card">
+          <div class="summary__arch-card-head">
+            <div class="summary__arch-card-icon" style="background:#aa96d2;">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <span class="summary__arch-tag">设计系统</span>
+              <h3 class="summary__arch-title">视觉风格统一</h3>
+            </div>
+          </div>
+          <div class="summary__arch-body">
+            <ul>
+              <li><strong>主色调：</strong>#dba460 暖金色 (品牌强调色)</li>
+              <li><strong>中性色：</strong>#111 深黑 / #666-#888 灰 / #aaa 浅灰</li>
+              <li><strong>字体：</strong>PingFang SC, Microsoft YaHei, sans-serif</li>
+              <li><strong>圆角：</strong>12-16px 统一卡片圆角</li>
+              <li><strong>动画：</strong>fadeInUp 入场 + cubic-bezier(.22,1,.36,1) 缓动</li>
+              <li><strong>页脚：</strong>统一布局 © 2026 xiec / 湖南长沙</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页面详解 -->
+    <section class="summary__section">
+      <h2 class="summary__section-title">
+        <span class="summary__section-icon">📄</span>
+        页面详解
+      </h2>
+
+      <div class="summary__pages-grid">
+
+        <!-- 1. 主页 index.html -->
+        <div class="summary__page-card" id="page-home">
+          <div class="summary__page-header">
+            <div class="summary__page-num">01</div>
+            <div class="summary__page-meta">
+              <span class="summary__page-file">index.html</span>
+              <h3 class="summary__page-name">主页</h3>
+              <p class="summary__page-desc">个人博客首页 / 品牌落地页</p>
+            </div>
+            <a href="./index.html" class="summary__page-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="summary__page-body">
+            <div class="summary__page-section">
+              <h4>结构</h4>
+              <ul>
+                <li><code>&lt;section class="hero"&gt;</code> 全屏 (100vh) Hero 区域</li>
+                <li><code>.hero__brand</code> "hello" 金色品牌文字</li>
+                <li><code>.hero__title</code> 大标题 "xiec 的 blog" (clamp 86-122px)</li>
+                <li><code>.hero__countdown</code> 学校名 + 地点</li>
+                <li><code>#cursor</code> 400px 黑色圆形自定义光标</li>
+            </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>功能与交互</h4>
+              <ul>
+                <li>自定义大圆形光标跟随鼠标移动</li>
+                <li>标题文字 3D 朝向效果 (script.js)</li>
+                <li>导航栏区域自动隐藏自定义光标</li>
+                <li>主页专属波点背景 (radial-gradient 圆点纹理)</li>
+                <li>所有文字元素 fadeInUp 入场动画</li>
+                <li>光斑持续漂移营造流动氛围</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>技术要点</h4>
+              <ul>
+                <li><code>body.page-home</code> 触发主页专属样式</li>
+                <li>CSS 变量未使用，直接硬编码颜色值</li>
+                <li>自定义光标通过 JS mousemove 事件驱动</li>
+                <li>响应式：移动端隐藏自定义光标</li>
+              </ul>
+            </div>
+            <div class="summary__page-tags">
+              <span>fadeInUp 动画</span><span>自定义光标</span><span>毛玻璃背景</span><span>全屏 Hero</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 作品页 works.html -->
+        <div class="summary__page-card" id="page-works">
+          <div class="summary__page-header">
+            <div class="summary__page-num">02</div>
+            <div class="summary__page-meta">
+              <span class="summary__page-file">works.html + works.css + works.js</span>
+              <h3 class="summary__page-name">作品</h3>
+              <p class="summary__page-desc">创意作品集展示 / 分类筛选 / 灯箱预览</p>
+            </div>
+            <a href="./works.html" class="summary__page-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="summary__page-body">
+            <div class="summary__page-section">
+              <h4>结构</h4>
+              <ul>
+                <li><code>.works__hero</code> 页面标题区 (PORTFOLIO / My Works)</li>
+                <li><code>.works__filters</code> 5 个分类筛选按钮 (全部/建模/拍摄/调色/其他)</li>
+                <li><code>.works__grid</code> 3 列 CSS Grid (响应式: 2列→1列)</li>
+                <li>20 张 <code>.works__card</code>：8 建模 + 7 拍摄 + 2 调色视频 + 其他占位</li>
+                <li><code>.lightbox</code> 全屏灯箱模态框 (前后导航/关闭/信息展示)</li>
+                <li><code>.works__more</code> 加载更多按钮</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>功能与交互</h4>
+              <ul>
+                <li><strong>分类筛选：</strong>点击按钮通过 data-category 显示/隐藏卡片</li>
+                <li><strong>灯箱预览：</strong>点击卡片打开全屏大图，支持键盘/按钮前后导航</li>
+                <li>卡片 hover: 上移 6px + 阴影 + 金色边框 + 图片放大 1.05x</li>
+                <li>视频作品自动循环静音播放</li>
+                <li>所有卡片错开延迟的 fadeInUp 入场动画</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>技术要点</h4>
+              <ul>
+                <li>筛选逻辑通过 <code>works.js</code> 实现，使用 <code>.is-hidden</code> 类</li>
+                <li>灯箱 <code>opacity + visibility</code> 过渡，图片 scale(0.9)→scale(1)</li>
+                <li>4:3 固定宽高比媒体容器 (aspect-ratio: 4/3)</li>
+                <li>lazy loading 图片优化性能</li>
+              </ul>
+            </div>
+            <div class="summary__page-tags">
+              <span>CSS Grid</span><span>分类筛选</span><span>灯箱模态框</span><span>视频嵌入</span><span>lazy load</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. 社交页 social.html -->
+        <div class="summary__page-card" id="page-social">
+          <div class="summary__page-header">
+            <div class="summary__page-num">03</div>
+            <div class="summary__page-meta">
+              <span class="summary__page-file">social.html + social.css</span>
+              <h3 class="summary__page-name">社交</h3>
+              <p class="summary__page-desc">社交平台链接卡片 / 外部跳转</p>
+            </div>
+            <a href="./social.html" class="summary__page-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="summary__page-body">
+            <div class="summary__page-section">
+              <h4>结构</h4>
+              <ul>
+                <li><code>.social__hero</code> 标题区 (SOCIAL / 社交平台)</li>
+                <li><code>.social__grid</code> 2 列网格 (响应式 1 列)</li>
+                <li>4 张 <code>.social__card</code> (均为 &lt;a&gt; 标签)</li>
+                <li>每张卡片：彩色图标 + 标签/标题/描述 + 跳转箭头</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>功能与交互</h4>
+              <ul>
+                <li><strong>平台卡片：</strong>GitHub / 小红书 / Bilibili / 抖音</li>
+                <li>卡片为 &lt;a&gt; 链接，target="_blank" 新窗口跳转</li>
+                <li>hover: 上移 4px + 金色边框 + 渐变背景 + 图标放大 + 标题变色</li>
+                <li>箭头 hover: 金色变色 + 右上方位移</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>技术要点</h4>
+              <ul>
+                <li>伪元素 <code>::before</code> 实现 hover 渐变背景</li>
+                <li>平台图标使用内联 SVG，自定义品牌色背景</li>
+                <li>简洁的单文件 CSS，无 JS 逻辑</li>
+              </ul>
+            </div>
+            <div class="summary__page-tags">
+              <span>2列网格</span><span>SVG 图标</span><span>外部链接</span><span>渐变背景</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. 音乐页 music.html -->
+        <div class="summary__page-card" id="page-music">
+          <div class="summary__page-header">
+            <div class="summary__page-num">04</div>
+            <div class="summary__page-meta">
+              <span class="summary__page-file">music.html + music.css</span>
+              <h3 class="summary__page-name">音乐</h3>
+              <p class="summary__page-desc">嵌入外部音乐网站 / iframe 集成</p>
+            </div>
+            <a href="./music.html" class="summary__page-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="summary__page-body">
+            <div class="summary__page-section">
+              <h4>结构</h4>
+              <ul>
+                <li><code>iframe.music__frame</code> 嵌入 Hanakos Music</li>
+                <li>几乎占满视口 (calc(100vh - 80px))</li>
+                <li>底部页脚 (版权 + 地点)</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>功能与交互</h4>
+              <ul>
+                <li>嵌入 <code>https://forum.hanakos.cc/music</code></li>
+                <li>允许全屏 (allow="fullscreen")</li>
+                <li>lazy loading 延迟加载</li>
+                <li>圆角 12px 白色背景</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>技术要点</h4>
+              <ul>
+                <li>纯 iframe 嵌入，无复杂 JS 逻辑</li>
+                <li>最简洁的页面结构</li>
+                <li>移动端自适应高度</li>
+              </ul>
+            </div>
+            <div class="summary__page-tags">
+              <span>iframe 嵌入</span><span>第三方集成</span><span>全屏支持</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. 自习页 zixi.html -->
+        <div class="summary__page-card" id="page-zixi">
+          <div class="summary__page-header">
+            <div class="summary__page-num">05</div>
+            <div class="summary__page-meta">
+              <span class="summary__page-file">zixi.html (独立单文件 ~2000行)</span>
+              <h3 class="summary__page-name">自习</h3>
+              <p class="summary__page-desc">MBTI 沉浸式自习室 / 番茄钟计时 / 数据统计</p>
+            </div>
+            <a href="./zixi.html" class="summary__page-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="summary__page-body">
+            <div class="summary__page-section">
+              <h4>结构</h4>
+              <ul>
+                <li><strong>选择页 (#selection)：</strong>MBTI 16 人格类型卡片选择 + 每日目标设置</li>
+                <li><strong>学习界面 (#studyUI)：</strong>顶部栏 (时钟/场景/音量) + 中央计时器 + 底栏</li>
+                <li><strong>侧边导航 (.side-nav)：</strong>6 个页面链接，鼠标悬停滑出</li>
+                <li><strong>滑出面板：</strong>待办 / 日记 / 成就 / 统计 / 设置 (左右滑出)</li>
+                <li><strong>弹出层：</strong>退出报告 / 护眼提醒 / 完成通知 / 成就弹窗</li>
+                <li><strong>背景系统：</strong>Canvas 粒子特效 + 场景图片 + 光斑 + 暗角</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>功能与交互</h4>
+              <ul>
+                <li><strong>16 种 MBTI 人格：</strong>每种对应独特场景 (森林/海洋/星空等)</li>
+                <li><strong>番茄钟计时：</strong>正计时 / 倒计时 / 自定义时长</li>
+                <li><strong>BGM 系统：</strong>多种场景白噪音 + 音量控制</li>
+                <li><strong>待办清单：</strong>添加/完成/删除任务，进度统计</li>
+                <li><strong>学习日记：</strong>每次完成后记录心得</li>
+                <li><strong>成就系统：</strong>累计番茄数解锁成就徽章</li>
+                <li><strong>数据统计：</strong>总时长/天数/连续天数/时段热力图/每日目标</li>
+                <li><strong>数据导入导出：</strong>JSON 格式备份恢复</li>
+                <li><strong>护眼提醒：</strong>每 20 分钟弹出休息提示</li>
+                <li><strong>全屏模式：</strong>沉浸式专注体验</li>
+                <li><strong>专注模式：</strong>隐藏 UI 仅显示计时器</li>
+                <li><strong>场景随机切换：</strong>一键随机探索</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>技术要点</h4>
+              <ul>
+                <li><strong>单文件架构：</strong>~2000 行 HTML/CSS/JS 内联</li>
+                <li><strong>CSS 变量主题系统：</strong>--accent / --glass / --border / --t1-t3 / --surface</li>
+                <li><strong>Canvas 粒子动画：</strong>背景动态粒子效果</li>
+                <li><strong>localStorage 持久化：</strong>所有数据本地存储</li>
+                <li><strong>昼夜模式：</strong>body.light 类切换完整主题</li>
+                <li><strong>环形进度条：</strong>SVG circle 实现计时可视化</li>
+                <li><strong>MBTI 分组：</strong>分析师/外交家/守护者/探险家四组</li>
+                <li><strong>热力图：</strong>展示每日学习时段分布</li>
+              </ul>
+            </div>
+            <div class="summary__page-tags">
+              <span>番茄钟</span><span>MBTI</span><span>Canvas 粒子</span><span>localStorage</span><span>CSS 变量</span><span>成就系统</span><span>数据统计</span><span>热力图</span><span>昼夜主题</span><span>全屏模式</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. 建议页 suggest.html -->
+        <div class="summary__page-card" id="page-suggest">
+          <div class="summary__page-header">
+            <div class="summary__page-num">06</div>
+            <div class="summary__page-meta">
+              <span class="summary__page-file">suggest.html + suggest.css</span>
+              <h3 class="summary__page-name">建议</h3>
+              <p class="summary__page-desc">用户反馈表单 / Tally 集成</p>
+            </div>
+            <a href="./suggest.html" class="summary__page-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+          <div class="summary__page-body">
+            <div class="summary__page-section">
+              <h4>结构</h4>
+              <ul>
+                <li><code>.suggest__hero</code> 标题区 (FEEDBACK / 建议反馈)</li>
+                <li><code>.suggest__form</code> 白色卡片容器 (max-width 680px)</li>
+                <li>Tally 表单 iframe 嵌入</li>
+                <li>底部页脚 (版权 + 地点)</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>功能与交互</h4>
+              <ul>
+                <li>嵌入 Tally.so 表单 (<code>rjgllM</code>)</li>
+                <li>动态加载 Tally 嵌入脚本</li>
+                <li>自适应高度 (dynamicHeight=1)</li>
+                <li>表单容器白色背景 + 圆角 16px + 微阴影</li>
+              </ul>
+            </div>
+            <div class="summary__page-section">
+              <h4>技术要点</h4>
+              <ul>
+                <li>第三方表单服务集成 (Tally)</li>
+                <li>异步脚本加载 + 回调初始化</li>
+                <li>简洁的表单容器设计</li>
+              </ul>
+            </div>
+            <div class="summary__page-tags">
+              <span>Tally 表单</span><span>iframe 嵌入</span><span>异步加载</span><span>用户反馈</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 技术栈总览 -->
+    <section class="summary__section">
+      <h2 class="summary__section-title">
+        <span class="summary__section-icon">⚙️</span>
+        技术栈总览
+      </h2>
+      <div class="summary__tech-grid">
+        <div class="summary__tech-card">
+          <div class="summary__tech-icon">🎨</div>
+          <h3>纯原生技术</h3>
+          <p>HTML5 + CSS3 + Vanilla JavaScript，无框架依赖</p>
+          <ul>
+            <li>CSS Grid / Flexbox 布局</li>
+            <li>CSS 自定义属性 (变量)</li>
+            <li>CSS 动画 (@keyframes)</li>
+            <li>backdrop-filter 毛玻璃</li>
+          </ul>
+        </div>
+        <div class="summary__tech-card">
+          <div class="summary__tech-icon">💾</div>
+          <h3>数据持久化</h3>
+          <p>浏览器 localStorage 存储用户数据</p>
+          <ul>
+            <li>自习室状态保存/恢复</li>
+            <li>JSON 格式导入导出</li>
+            <li>学习历史记录</li>
+          </ul>
+        </div>
+        <div class="summary__tech-card">
+          <div class="summary__tech-icon">🔌</div>
+          <h3>第三方集成</h3>
+          <p>外部服务嵌入与 API</p>
+          <ul>
+            <li>Tally.so 表单嵌入</li>
+            <li>Hanakos Music iframe</li>
+            <li>Google Fonts (Cormorant Garamond / DM Mono)</li>
+            <li>Font Awesome 图标库 (自习页)</li>
+          </ul>
+        </div>
+        <div class="summary__tech-card">
+          <div class="summary__tech-icon">📐</div>
+          <h3>设计模式</h3>
+          <p>一致的视觉语言与交互规范</p>
+          <ul>
+            <li>BEM 命名规范 (block__element--modifier)</li>
+            <li>统一页脚组件模式</li>
+            <li>fadeInUp 入场动画体系</li>
+            <li>cubic-bezier(.22,1,.36,1) 缓动标准</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 文件结构 -->
+    <section class="summary__section">
+      <h2 class="summary__section-title">
+        <span class="summary__section-icon">📁</span>
+        文件结构
+      </h2>
+      <div class="summary__files">
+        <div class="summary__file-tree">
+          <div class="summary__file-row summary__file-row--dir"><span>📂</span> 项目根目录</div>
+          <div class="summary__file-row"><span>📄</span> index.html <code>主页 — 品牌落地页</code></div>
+          <div class="summary__file-row"><span>📄</span> works.html <code>作品 — 创意作品集</code></div>
+          <div class="summary__file-row"><span>📄</span> social.html <code>社交 — 平台链接</code></div>
+          <div class="summary__file-row"><span>📄</span> music.html <code>音乐 — 嵌入播放器</code></div>
+          <div class="summary__file-row"><span>📄</span> zixi.html <code>自习 — MBTI 自习室 (~2000行)</code></div>
+          <div class="summary__file-row"><span>📄</span> suggest.html <code>建议 — 反馈表单</code></div>
+          <div class="summary__file-row summary__file-row--gap"><span>🎨</span> styles.css <code>全局共享样式 + Header + Hero + 背景</code></div>
+          <div class="summary__file-row"><span>🎨</span> works.css <code>作品页专属样式 + 灯箱</code></div>
+          <div class="summary__file-row"><span>🎨</span> social.css <code>社交页专属样式</code></div>
+          <div class="summary__file-row"><span>🎨</span> music.css <code>音乐页专属样式</code></div>
+          <div class="summary__file-row"><span>🎨</span> suggest.css <code>建议页专属样式</code></div>
+          <div class="summary__file-row summary__file-row--gap"><span>⚡</span> script.js <code>主页 JS — 光标 + 标题交互</code></div>
+          <div class="summary__file-row"><span>⚡</span> works.js <code>作品页 JS — 筛选 + 灯箱</code></div>
+          <div class="summary__file-row summary__file-row--gap"><span>🖼️</span> images/ <code>19 个媒体文件 (9 jpg + 7 png + 2 mov)</code></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页面间关系 -->
+    <section class="summary__section">
+      <h2 class="summary__section-title">
+        <span class="summary__section-icon">🔗</span>
+        页面间关系
+      </h2>
+      <div class="summary__rel-grid">
+        <div class="summary__rel-card">
+          <h4>导航拓扑</h4>
+          <div class="summary__rel-diagram">
+            <div class="summary__rel-node summary__rel-node--center">Header 导航栏</div>
+            <div class="summary__rel-links">
+              <span>主页</span><span>→</span><span>作品</span><span>→</span><span>社交</span><span>→</span><span>音乐</span><span>→</span><span>自习</span><span>→</span><span>建议</span>
+            </div>
+          </div>
+        </div>
+        <div class="summary__rel-card">
+          <h4>CSS 依赖关系</h4>
+          <ul>
+            <li><strong>styles.css</strong> ← 所有页面共享</li>
+            <li><strong>works.css</strong> ← works.html</li>
+            <li><strong>social.css</strong> ← social.html</li>
+            <li><strong>music.css</strong> ← music.html</li>
+            <li><strong>suggest.css</strong> ← suggest.html</li>
+            <li><strong>zixi.html</strong> 完全独立 (内联 CSS/JS)</li>
+          </ul>
+        </div>
+        <div class="summary__rel-card">
+          <h4>JS 依赖关系</h4>
+          <ul>
+            <li><strong>script.js</strong> ← index.html (光标/标题)</li>
+            <li><strong>works.js</strong> ← works.html (筛选/灯箱)</li>
+            <li><strong>zixi.html</strong> 内联 JS (~800行)</li>
+            <li>social / music / suggest 无 JS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="summary__footer">
+    <div class="summary__footer-inner">
+      <span>© 2026 xiec</span>
+      <span>项目结构汇总 · 共 6 个页面</span>
+      <span>湖南长沙</span>
+    </div>
+  </footer>
+</body>
+</html>
