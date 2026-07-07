@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品 - xiec 的 blog</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./works.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__left">
+      <a href="./index.html" class="header__logo">
+        <img src="./images/logo.png" alt="XIEC" class="header__logoImg" />
+      </a>
+    </div>
+    <nav class="header__nav">
+      <a href="./index.html" class="header__navLink">主页</a>
+      <a href="#" class="header__navLink is-active">作品</a>
+      <a href="./social.html" class="header__navLink">社交</a>
+      <a href="./music.html" class="header__navLink">音乐</a>
+      <a href="./zixi.html" class="header__navLink" target="_blank">自习</a>
+      <a href="./suggest.html" class="header__navLink">建议</a>
+      <a href="./summary.html" class="header__navLink">汇总</a>
+    </nav>
+    <div class="header__right">
+      <button class="header__lang">EN</button>
+      <button class="header__share">分享</button>
+    </div>
+  </header>
+
+  <!-- 毛玻璃 + 色彩流动背景 -->
+  <div class="flow-bg">
+    <div class="flow-blob flow-blob--1"></div>
+    <div class="flow-blob flow-blob--2"></div>
+    <div class="flow-blob flow-blob--3"></div>
+    <div class="flow-blob flow-blob--4"></div>
+    <div class="flow-blob flow-blob--5"></div>
+  </div>
+  <div class="glass-overlay"></div>
+
+  <!-- 作品展示区域 -->
+  <main class="works">
+    <!-- 顶部标题 -->
+    <section class="works__hero">
+      <div class="works__hero-brand">PORTFOLIO</div>
+      <h1 class="works__hero-title" id="worksTitle">My Works</h1>
+      <p class="works__hero-desc">精选项目与创作</p>
+    </section>
+
+    <!-- 轮播图 -->
+    <section class="works__carousel" id="worksCarousel">
+      <div class="carousel__track" id="carouselTrack">
+        <div class="carousel__slide">
+          <div class="carousel__inner">
+            <img src="./images/modeling-01.png" alt="竹林小径" />
+            <div class="carousel__caption">
+              <span class="carousel__tag">建模</span>
+              <h3>竹林小径</h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel__slide">
+          <div class="carousel__inner">
+            <img src="./images/modeling-03.png" alt="蛋挞节点" />
+            <div class="carousel__caption">
+              <span class="carousel__tag">建模</span>
+              <h3>蛋挞节点</h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel__slide">
+          <div class="carousel__inner">
+            <img src="./images/modeling-04.png" alt="蓝莓模型" />
+            <div class="carousel__caption">
+              <span class="carousel__tag">建模</span>
+              <h3>蓝莓模型</h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel__slide">
+          <div class="carousel__inner">
+            <img src="./images/shooting-01.jpg" alt="梨花" />
+            <div class="carousel__caption">
+              <span class="carousel__tag">拍摄</span>
+              <h3>梨花</h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel__slide">
+          <div class="carousel__inner">
+            <img src="./images/shooting-02.jpg" alt="蓝猫" />
+            <div class="carousel__caption">
+              <span class="carousel__tag">拍摄</span>
+              <h3>蓝猫</h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel__slide">
+          <div class="carousel__inner">
+            <img src="./images/shooting-05.jpg" alt="樱花" />
+            <div class="carousel__caption">
+              <span class="carousel__tag">拍摄</span>
+              <h3>樱花</h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel__slide">
+          <div class="carousel__inner">
+            <img src="./images/modeling-06.png" alt="小水怪" />
+            <div class="carousel__caption">
+              <span class="carousel__tag">建模</span>
+              <h3>小水怪</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel__btn carousel__btn--prev" id="carouselPrev" aria-label="上一张">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="15,4 7,12 15,20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="carousel__btn carousel__btn--next" id="carouselNext" aria-label="下一张">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="9,4 17,12 9,20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel__dots" id="carouselDots"></div>
+    </section>
+
+    <!-- 作品筛选 -->
+    <div class="works__filters">
+      <button class="works__filter is-active" data-filter="all">全部</button>
+      <button class="works__filter" data-filter="modeling">建模</button>
+      <button class="works__filter" data-filter="shooting">拍摄</button>
+      <button class="works__filter" data-filter="color">调色</button>
+      <button class="works__filter" data-filter="other">其他</button>
+    </div>
+
+    <!-- 作品网格 -->
+    <div class="works__grid" id="worksGrid">
+      <!-- 建模 01 - 竹林小径 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/modeling-01.png" alt="竹林小径" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">竹林小径</h3>
+        </div>
+      </article>
+
+      <!-- 建模 02 - 电车蝴蝶 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/modeling-02.jpg" alt="电车蝴蝶" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">电车蝴蝶</h3>
+        </div>
+      </article>
+
+      <!-- 建模 03 - 蛋挞节点 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/modeling-03.png" alt="蛋挞节点" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">蛋挞节点</h3>
+        </div>
+      </article>
+
+      <!-- 建模 04 - 蓝莓模型 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/modeling-04.png" alt="蓝莓模型" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">蓝莓模型</h3>
+        </div>
+      </article>
+
+      <!-- 建模 05 - 柠檬 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img works__card-img--flip" src="./images/modeling-05.png" alt="柠檬" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">柠檬</h3>
+        </div>
+      </article>
+
+      <!-- 建模 06 - 小水怪 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/modeling-06.png" alt="小水怪" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">小水怪</h3>
+        </div>
+      </article>
+
+      <!-- 建模 07 - 云端 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/modeling-07.png" alt="云端" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">云端</h3>
+        </div>
+      </article>
+
+      <!-- 建模 08 - 电车内部 -->
+      <article class="works__card" data-category="modeling">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/modeling-08.png" alt="电车内部" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">建模</span>
+          <h3 class="works__card-title">电车内部</h3>
+        </div>
+      </article>
+
+      <!-- 拍摄 01 - 梨花 -->
+      <article class="works__card" data-category="shooting">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/shooting-01.jpg" alt="梨花" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">拍摄</span>
+          <h3 class="works__card-title">梨花</h3>
+        </div>
+      </article>
+
+      <!-- 拍摄 02 - 蓝猫 -->
+      <article class="works__card" data-category="shooting">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/shooting-02.jpg" alt="蓝猫" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">拍摄</span>
+          <h3 class="works__card-title">蓝猫</h3>
+        </div>
+      </article>
+
+      <!-- 拍摄 03 - 小猫 -->
+      <article class="works__card" data-category="shooting">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/shooting-03.jpg" alt="小猫" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">拍摄</span>
+          <h3 class="works__card-title">小猫</h3>
+        </div>
+      </article>
+
+      <!-- 拍摄 04 - 橘猫 -->
+      <article class="works__card" data-category="shooting">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/shooting-04.jpg" alt="橘猫" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">拍摄</span>
+          <h3 class="works__card-title">橘猫</h3>
+        </div>
+      </article>
+
+      <!-- 拍摄 05 - 樱花 -->
+      <article class="works__card" data-category="shooting">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/shooting-05.jpg" alt="樱花" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">拍摄</span>
+          <h3 class="works__card-title">樱花</h3>
+        </div>
+      </article>
+
+      <!-- 拍摄 06 - 樱花枝 -->
+      <article class="works__card" data-category="shooting">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/shooting-06.jpg" alt="樱花枝" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">拍摄</span>
+          <h3 class="works__card-title">樱花枝</h3>
+        </div>
+      </article>
+
+      <!-- 拍摄 07 - 樱花特写 -->
+      <article class="works__card" data-category="shooting">
+        <div class="works__card-media">
+          <img class="works__card-img" src="./images/shooting-07.jpg" alt="樱花特写" loading="lazy" />
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">拍摄</span>
+          <h3 class="works__card-title">樱花特写</h3>
+        </div>
+      </article>
+
+      <!-- 调色 01 - 东京2 -->
+      <article class="works__card" data-category="color">
+        <div class="works__card-media">
+          <video class="works__card-img" src="./images/color-01.mov" autoplay loop muted playsinline></video>
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">调色</span>
+          <h3 class="works__card-title">东京2</h3>
+        </div>
+      </article>
+
+      <!-- 调色 02 - 东京8 -->
+      <article class="works__card" data-category="color">
+        <div class="works__card-media">
+          <video class="works__card-img" src="./images/color-02.mov" autoplay loop muted playsinline></video>
+        </div>
+        <div class="works__card-info">
+          <span class="works__card-tag">调色</span>
+          <h3 class="works__card-title">东京8</h3>
+        </div>
+      </article>
+
+      <!-- 其他 -->
+    </div>
+
+    <!-- 加载更多 + 编辑 + 添加照片 -->
+    <div class="works__more">
+      <button class="works__more-btn">加载更多作品</button>
+      <button class="works__edit-btn" id="worksEditBtn" aria-label="编辑模式">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="3 6 9.5 6 14 19 7.5 19 3 6"/>
+          <line x1="9.5" y1="6" x2="14" y2="19"/>
+          <line x1="8" y1="12" x2="13" y2="12"/>
+        </svg>
+        <span>编辑</span>
+      </button>
+      <button class="works__add-btn" id="worksAddBtn" aria-label="添加照片">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        <span>添加照片</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- ========== 添加照片弹窗 ========== -->
+  <div class="add-modal" id="addModal">
+    <div class="add-modal__overlay"></div>
+    <div class="add-modal__container">
+      <button class="add-modal__close" id="addModalClose" aria-label="关闭">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>
+        </svg>
+      </button>
+      <div class="add-modal__header">
+        <h3 class="add-modal__title">添加新作品</h3>
+        <p class="add-modal__sub">上传照片并填写信息</p>
+      </div>
+      <form class="add-modal__form" id="addForm">
+        <!-- 图片上传区 -->
+        <div class="add-modal__field">
+          <label class="add-modal__label">作品图片</label>
+          <div class="add-modal__upload" id="uploadZone">
+            <input type="file" id="fileInput" accept="image/*" hidden />
+            <div class="add-modal__upload-placeholder" id="uploadPlaceholder">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+              </svg>
+              <span>点击或拖拽上传图片</span>
+              <span class="add-modal__upload-hint">支持 JPG / PNG / WebP</span>
+            </div>
+            <img class="add-modal__preview" id="uploadPreview" alt="预览" />
+          </div>
+        </div>
+        <!-- 作品名称 -->
+        <div class="add-modal__field">
+          <label class="add-modal__label" for="workTitle">作品名称</label>
+          <input type="text" id="workTitle" class="add-modal__input" placeholder="输入作品名称…" maxlength="30" required />
+        </div>
+        <!-- 分类选择 -->
+        <div class="add-modal__field">
+          <label class="add-modal__label">分类</label>
+          <div class="add-modal__categories" id="categoryOptions">
+            <label class="add-modal__cat"><input type="radio" name="category" value="modeling" checked /><span>建模</span></label>
+            <label class="add-modal__cat"><input type="radio" name="category" value="shooting" /><span>拍摄</span></label>
+            <label class="add-modal__cat"><input type="radio" name="category" value="color" /><span>调色</span></label>
+            <label class="add-modal__cat"><input type="radio" name="category" value="other" /><span>其他</span></label>
+          </div>
+        </div>
+        <!-- 描述（可选） -->
+        <div class="add-modal__field">
+          <label class="add-modal__label" for="workDesc">描述 <span class="add-modal__optional">(选填)</span></label>
+          <textarea id="workDesc" class="add-modal__textarea" placeholder="简单描述一下这件作品…" rows="2" maxlength="100"></textarea>
+        </div>
+        <!-- 提交 -->
+        <button type="submit" class="add-modal__submit" id="addSubmit">确认添加</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="works__footer">
+    <div class="works__footer-inner">
+      <span>© 2026 xiec</span>
+      <span>湖南长沙</span>
+    </div>
+  </footer>
+
+  <!-- 灯箱模态框 -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox__overlay"></div>
+    <div class="lightbox__container">
+      <button class="lightbox__close" id="lightboxClose" aria-label="关闭">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <line x1="8" y1="8" x2="24" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="8" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="lightbox__content">
+        <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+      </div>
+      <div class="lightbox__info" id="lightboxInfo">
+        <span class="lightbox__tag" id="lightboxTag"></span>
+        <h3 class="lightbox__title" id="lightboxTitle"></h3>
+        <p class="lightbox__desc" id="lightboxDesc"></p>
+      </div>
+      <button class="lightbox__prev" id="lightboxPrev" aria-label="上一张">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <polyline points="15,4 7,12 15,20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="lightbox__next" id="lightboxNext" aria-label="下一张">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <polyline points="9,4 17,12 9,20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="./works.js"></script>
+</body>
+</html>
